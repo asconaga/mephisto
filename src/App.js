@@ -1,13 +1,27 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './App.css';
-import { Layout, Menu, Popover } from 'antd';
+import { Button, Layout, Menu, Modal, Popover, Result } from 'antd';
 import { BrowserRouter, Route, Routes, useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
-import { FaBabyCarriage, FaBars, FaBolt, FaEarlybirds, FaGrunt, FaJenkins, FaMagento, FaMandalorian } from 'react-icons/fa';
+import { FaBabyCarriage, FaBars, FaBolt, FaEarlybirds, FaGrunt, FaInfoCircle, FaJenkins, FaMagento, FaMandalorian } from 'react-icons/fa';
 
 const { Header, Footer, Sider, Content } = Layout;
 
 function App() {
+  const [isModalVisible, setIsModalVisible] = useState(false);
+
+  const showModal = () => {
+    setIsModalVisible(true);
+  };
+
+  const handleOk = () => {
+    setIsModalVisible(false);
+  };
+
+  const handleCancel = () => {
+    setIsModalVisible(false);
+  };
+
   const Home = () => {
     return (
       <main className="Home">
@@ -27,11 +41,16 @@ function App() {
   const Missing = () => {
     return (
       <main className='Missing'>
-          <h2>Page Not Found</h2>
-          <p>Well, that's disappointing.</p>
-          <p>
+  <Result
+  status="404"
+  title="404"
+  subTitle="Sorry, something went horribly wrong..."
+    extra={
+      <Button type="primary" key="console">
               <Link to='/'>Visit Our Homepage</Link>
-          </p>
+      </Button>
+    }
+  />
       </main>
   )};
   
@@ -72,7 +91,6 @@ function App() {
       type,
     };
   }
-
 
   const items = [
     getItem('Home', '/', <FaBolt />),
@@ -129,9 +147,7 @@ function App() {
   return (
     <div className="App">
       <BrowserRouter>
-        <Layout style={{
-          minHeight: '100vh',
-        }}>
+        <Layout style={{ minHeight: '100vh' }}>
           <Header className="header">
             <div className="logo flexCenter">
               <a href="./"><FaBolt />lijidea</a>
@@ -145,7 +161,6 @@ function App() {
             <Sider breakpoint="lg" collapsedWidth={48}>
               <Menu
                 mode="inline"
-                theme="dark"
                 defaultSelectedKeys={['1']}
                 style={{ height: '100%' }} >
                 {getMenu()}
@@ -163,9 +178,13 @@ function App() {
                   </Routes>
                 </div>
               </Content>
-              <Footer className="footer">Mephisto MAL Client Developed by lijidea</Footer>
+              <Footer className="footer">Mephisto - MAL Client Developed by lijidea</Footer>
             </Layout>
           </Layout>
+          <Button className='floater' onClick={showModal}><FaInfoCircle /></Button>
+          <Modal title="Quck Help" visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
+            {content}
+          </Modal>
         </Layout>
       </BrowserRouter>
     </div>
