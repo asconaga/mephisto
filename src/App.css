@@ -65,21 +65,55 @@ body {
   overflow-y: auto;
 }
 
-.floater{
+.floater {
 	position:absolute;
-	width:40px;
-	height:40px;
 	top:150px;
 	right:20px;
-
-	background-color: #111d2c;
 	color:#fff;
 	border-radius: 10px;
-	text-align:left;
 	box-shadow: 2px 2px 3px #999;
+  border-width: 0px;
+}
+
+.floater .ant-btn {
+	width:40px;
+	height:40px;
+	border-radius:inherit;
 }
 
 .floater svg{
   font-size: 30px;
   margin: 0px 0 0px -10px;
+}
+
+/* borrowed */
+
+.container-fluid {
+  margin: 0 auto;
+  max-width: 1200px;
+  padding: 0 15px;
+}
+
+/* --- block --- */
+.block {
+  padding: 60px 0;
+  border-bottom: 1px solid #d9d9d9;
+}
+
+/* --- services --- */
+
+.servicesBlock .contentHolder {
+  text-align: justify;
+  margin: 0 0 50px;
+}
+
+.servicesBlock .icon {
+  font-size: 40px;
+  color: #1890ff;
+  margin: 0 0 10px;
+}
+
+.servicesBlock .content {
+  text-align: center;
+  border: 1px solid black;
 }
