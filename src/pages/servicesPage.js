@@ -1,25 +1,21 @@
-import { Button, Carousel, Col, Row } from 'antd';
-import React from 'react'
-import { FaGrunt } from 'react-icons/fa';
+import {  Carousel, Col, message, Row } from 'antd';
+import React, { useEffect } from 'react'
 
 const cardItems = [
     {
       key: '1',
-      title: 'High Performance',
-      content: 'cu nostro dissentias consectetuer mel. Ut admodum conceptam mei, cu eam tation fabulas abhorreant. His ex mandamus.',
+      title: 'Services',
     },
     {
       key: '2',
-      title: 'Flat Design',
-      content: 'cu nostro dissentias consectetuer mel. Ut admodum conceptam mei, cu eam tation fabulas abhorreant. His ex mandamus.',
+      title: 'Methods',
+
     },
     {
       key: '3',
-      title: 'Simplified Workflow',
-      content: 'cu nostro dissentias consectetuer mel. Ut admodum conceptam mei, cu eam tation fabulas abhorreant. His ex mandamus.',
+      title: 'Posts',
     },
   ]
-
 
 const carItems = [
     {
@@ -41,62 +37,62 @@ const carItems = [
 
 const ServicesPage = () => {
   return (
-    <div>
+    <div id="services">  
       <ServicesSelection/>
-      <ServicesResult/>
     </div>
   )
 }
 
-
-
 const ServicesSelection = () => {
-    return (
-      <div id="services" className='servicesBlock'>
-      <Carousel>
-      {carItems.map(item => {
-          return (
-            <div key={item.key} className="container-fluid">
-              <div className="content">
-                <h3>{item.title}</h3>
-                <p>{item.content}</p>
-                <div className="btnHolder">
-                  <Button type="primary" size="large">Learn More</Button>
-                  <Button size="large"><FaGrunt/> Watch a Demo</Button>
-                </div>
-              </div>         
-            </div>  
-          );
-        })}
-      </Carousel>
-    </div>  
-    )
+  const API_URL = 'http://localhost:1337/api/services/';
+  // const [fetchItems, setFetchItems] = useState([]); 
+
+  const info = (msg) => {
+    message.success(msg);
   };
 
 
+  useEffect(() => {
+    async function reqCallback(response) {
+      if (response.ok) {
+        const resObj = await response.json();
 
-const ServicesResult = () => {
+        console.log();
+
+        info(`${resObj.services.service.length} Service(s) successfully fected`);
+      }
+    }
+
+    let request = {
+      method: 'GET',
+      mode: 'cors',
+      headers: { "Content-type": "application/json" }
+    }
+
+    const doFetchItems = async () => {
+      await fetch(API_URL, request)
+        .then(reqCallback)
+        .catch(function (error) {
+          console.log('Request failed', error);
+        })
+    };
+
+    (async () => await doFetchItems())();
+  }, []);
+
     return (
-        <div>
-        <div id="about" className="block servicesBlock">
+        <div className="block servicesBlock">
           <div className="container-fluid">
             <div className="titleHolder">
-              <h2>About Us</h2>
-              <p>dolor sit amet, consectetur adipisicing elit</p>
-            </div>
-            <div className="contentHolder">
-              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Velit necessitatibus officiis repudiandae est deserunt delectus dolorem iure porro distinctio fuga, nostrum doloremque. Facilis porro in laborum dolor amet ratione hic? Lorem ipsum dolor sit amet, consectetur adipisicing elit. Magnam aut a porro, adipisci quidem sint enim pariatur ducimus, saepe voluptatibus inventore commodi! Quis, explicabo molestias libero tenetur temporibus perspiciatis deserunt.</p>
+              <h2>Services</h2>
+              <p>Information on the services available along with their associated methods and associated posts are available below.</p>
             </div>
             <Row gutter={[16, 16]}>   
               {cardItems.map(item => {
                 return (
                   <Col md={{ span: 8 }} key={item.key}>
                     <div className="content">
-                      <div className="icon">
-                        {item.icon}
-                      </div>
-                      <h3>{item.title}</h3>
-                      <p>{item.content}</p>
+                    <ServicesCarousel subject = {item.title}/>
                     </div>
                   </Col>
                 );
@@ -104,9 +100,36 @@ const ServicesResult = () => {
             </Row>
           </div>
         </div>
-        </div>
     )
   }
+
+  const ServicesCarousel = (props) => {
+
+
+
+    return (
+      <div>
+        <div className="container-fluid">
+        <h2>{props.subject}</h2>          
+          <Carousel>
+            {carItems.map(item => {
+              return (
+                <div key={item.key} className="container-fluid">
+                  <div className="content">
+                    <h3>{item.title}</h3>
+                    <p>{item.content}</p>      
+                  </div>
+                </div>
+              );
+            })}
+          </Carousel>
+        </div>
+      </div>      
+      )
+    };
+  
+
+
  
   export default ServicesPage; 
 
