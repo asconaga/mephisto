@@ -1,0 +1,11 @@
+{
+    "incident": {
+        "id": 21012,
+        "name": "Thailand Test 1",
+        "modelId": 1,
+        "position": {
+            "lat": 12.65,
+            "lon": 100.8
+          }
+    }
+}

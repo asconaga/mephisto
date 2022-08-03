@@ -1,0 +1,171 @@
+﻿<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title><%=title%></title>
+    <link rel="icon" type="image/x-icon" href="static/favicon.ico">
+    <link rel="stylesheet" href="static/index.css"> 
+</head>
+
+<body>
+    <div class="app">
+        <div class="header">
+            <p>SARIS <%= locals.header %></p>
+        </div>
+        <div class="content">
+            <table id="ctlTable">
+                <tr>
+                    <th>ID</th>
+                    <th>Title</th>
+                    <th>Detail</th>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td><input name="title" id="ctlTitle" value="New Book" type="text"></td>
+                    <td><input name="detail" id="ctlDetail" type="text"></td>
+                </tr>
+            </table>
+    
+            <ul id="books"></ul>
+    
+            <div class="flexContainer">
+                <button id="ctlAddBook" type="button" onclick="OnAddBook()">Add Book</button>
+                <button id="ctlInitial" type="button" onclick="OnSetupInitial()">Initial Setup</button>
+                <button type="button" onclick="OnListBooks()">List Books</button>
+            </div>
+        </div>
+        <div class="footer">Date: 2022</div>
+    </div>
+    <script async data-id="five-server" src="http://localhost:8080/fiveserver.js"></script>
+
+    <script type="text/javascript" language="javascript">
+        async function DoFetch(cmd, uri, newObj, callback) {
+           let request =  {
+                method: cmd,
+                mode: 'cors',
+                redirect: 'follow',
+                headers: { "Content-type": "application/json"}
+            }     
+
+            if (newObj !== null) {
+                request['body'] = JSON.stringify(newObj);
+            }
+
+            await fetch(uri, request)
+                .then(callback)
+                .catch(function(error) {
+                    console.log('Request failed', error);
+            })
+        };
+
+        const ctlAddBook = document.getElementById("ctlAddBook");
+        const ctlBooksList = document.getElementById('books');
+
+        const ctlTitle = document.getElementById("ctlTitle");
+        const ctlDetail = document.getElementById("ctlDetail");
+        const ctlTable = document.getElementById("ctlTable");
+
+        const arrInputs = [ctlTitle, ctlDetail];
+
+        const BooksInputHandler = (e) => {
+            let bIsDis = true;
+
+            arrInputs.forEach(ctlInput => {
+                bIsDis &= (ctlInput.value.length > 0);
+            });
+
+            ctlAddBook.disabled = !bIsDis;
+        }
+
+        arrInputs.forEach(ctlInput => {
+            ctlInput.addEventListener('input', BooksInputHandler);
+        });
+
+        async function OnAddBook() {
+            const szTitle = ctlTitle.value;
+            const szDetail = ctlDetail.value;
+
+            const newObj = { "title": szTitle, "detail": szDetail };
+            DoFetch("POST", "api/books", newObj, OnAddBookCallBack);
+
+            ctlTitle.value = ctlDetail.value = "";
+        }
+
+        function DeleteBooks() {
+            const tbody = ctlTable.children[0];
+            const nElems = tbody.children.length;
+
+            for (let nIndex = 1; nIndex < (nElems - 1); nIndex++) {
+                tbody.removeChild(tbody.children[1]);
+            }
+        }
+
+        async function OnDeleteBooksCallBack(response) {
+            if (response.ok) {
+                let newObj = { "title": "Adventures in Winking", "detail": "Jack's Debut Release" };
+                DoFetch("POST", "/api/books", newObj, null);
+
+                newObj = { "title": "Winking over Stranger Things", "detail": "Jack returns with a masterpiece" };
+                DoFetch("POST", "/api/books", newObj, null);
+
+                OnListBooks();
+            }
+        }
+
+        function OnSetupInitial() {
+            DoFetch("DELETE", "api/books", {}, OnDeleteBooksCallBack);
+        }
+
+        function OnListBooks() {
+            DoFetch("GET", "api/books", null, OnListBooksCallBack);
+        }
+
+        function AddBookToTable(newObj) {
+            const newTR = document.createElement("tr");
+            const tbody = ctlTable.children[0];
+
+            for (const item in newObj) {
+                const val = newObj[item];
+
+                let newTD = document.createElement("td");
+
+                newTD.innerHTML = val;
+                newTR.appendChild(newTD);
+            }
+
+            const nElems = tbody.children.length;
+
+            tbody.insertBefore(newTR, tbody.children[nElems - 1]);
+        }
+
+        async function OnAddBookCallBack(response) {
+            if (response.ok) {
+
+                const resObj = await response.json();
+
+                AddBookToTable(resObj);
+            }
+        }
+
+        async function OnListBooksCallBack(response) {
+            if (response.ok) 
+            {
+                const tbody = ctlTable.children[0];
+                const nElems = tbody.children.length;
+
+                DeleteBooks();
+
+                const resObj = await response.json();
+
+                resObj.forEach(book => {
+                    AddBookToTable(book);
+                });
+            }
+        }
+
+        // init code
+        BooksInputHandler(); // run initially to disable Add Course
+    </script>
+</body>
+</html >

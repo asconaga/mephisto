@@ -1,0 +1,72 @@
+{
+  "books": [
+    {
+      "id": "3127afbd-4aef-49dc-b3b8-ee58ba358451",
+      "title": "Adventures in Winking",
+      "detail": "Jack's Debut Release"
+    },
+    {
+      "id": "a5ff6fff-963f-4d29-b153-9bfadc1af0b3",
+      "title": "Winking over Stranger Things",
+      "detail": "Jack returns with a masterpiece"
+    },
+    {
+      "id": "c61e0d66-f90f-4de6-af07-1affe0ea7d75",
+      "title": "Adventures in coding",
+      "detail": "All you need to know about JSON"
+    },
+    {
+      "id": "0aa50519-c532-4998-92bc-2da140d356da",
+      "title": "My Bookie Wook",
+      "detail": "Russel Brand"
+    }
+  ],
+  "admin": [
+    {
+      "key": "dff7ef8d-f7cb-447e-a4c8-45e549345321",
+      "email": "asconaga@gmail.com",
+      "password": "$2b$10$ZwXSrkqhZsaWELLoOjjTAOyd.I4q3kjf5bYCTWxBkE.r4VksILkb2"
+    },
+    {
+      "key": "0ce92734-0068-466b-abf9-42999a241082",
+      "email": "kennywoof@gmail.com",
+      "password": "$2b$10$/XVc6VZdIST1zLaoWZ9/Uu8O6R3COcVI4SzFuM7GvdlhX1mhqce0O"
+    }
+  ],
+  "services": [
+    {
+      "key": "aaecb368-067c-4d87-b4ec-cfa7a98b702a",
+      "name": "bigDog",
+      "owner": "0ce92734-0068-466b-abf9-42999a241082",
+      "methods": [
+        {
+          "key": "c881b7cd-083d-4537-bcb8-0fc00c3664a3",
+          "name": "woof"
+        },
+        {
+          "key": "799d812a-2e16-4db6-a711-06199d9eced1",
+          "name": "growl"
+        },
+        {
+          "key": "09c1adc6-d07f-4c53-8569-c35e7dc68dee",
+          "name": "poop"
+        }
+      ]
+    },
+    {
+      "key": "34a03ee6-2c79-44fb-9432-a9b3870826ab",
+      "name": "sarIncident",
+      "owner": "dff7ef8d-f7cb-447e-a4c8-45e549345321",
+      "methods": [
+        {
+          "key": "83354767-fe41-4b8d-bc6f-0426367b2c34",
+          "name": "config"
+        },
+        {
+          "key": "2a6d44bf-7b74-49ee-a54b-acc6827dc07e",
+          "name": "results"
+        }
+      ]
+    }
+  ]
+}

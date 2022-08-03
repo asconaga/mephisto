@@ -1,0 +1,42 @@
+    1  apt-get upgrade
+    4  apt install nodejs
+    5  node --version
+    6  apt-get update
+   17  apt install npm
+   18  curl -sL https://deb.nodesource.com/setup_14.x | bash -
+   19  apt-get install -y nodejs
+   26  curl http://localhost:8080
+   31  netstat -an
+   32  netstat -an | grep 3000
+   33  netstat -an | grep 8080
+   69  shutdown now
+   70  node server.js
+   72  curl http://localhost:1337
+   81  cd /lib/systemd/system
+   82  vim server.service
+   84  mv server.service nodeserver.service 
+   87  systemctl start nodeserver
+   88  curl http://localhost:1337
+   89  systemctl enable nodeserver
+   90  ss -antpl : grep 1337
+   92  apt-get install nginx -y
+   93  nano /etc/nginx/conf.d/nodeserver.conf
+   94  nginx -t
+   95  systemctl restart nginx
+   96  systemctl status nginx
+   99  nano /etc/nginx/conf.d/nodeserver.conf
+  107  nginx -t
+  108  systemctl restart nginx
+  109  nginx -t
+  110  vim default 
+  111  nginx -t
+  112  systemctl restart nginx
+  117  cd /etc/nginx
+  118  nano /etc/nginx/conf.d/nodeserver.conf
+  119  vim server.service
+  125  nginx -t
+  126  systemctl restart nginx
+  127  systemctl daemon-reload
+  131  systemctl stop nodeserver
+  132  systemctl start nodeserver
+  135  history > out.txt

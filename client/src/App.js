@@ -140,7 +140,7 @@ function App() {
         <Layout style={{ minHeight: '100vh' }}>
           <Header className="header">
             <div className="logo flexCenter">
-              <a href="./"><FaBolt />lijidea</a>
+              <a href="./"><FaBolt />Mephisto</a>
             </div>
             <Popover placement="bottomRight" content={content} title="Jack's Menus">
               <div className="headerUtil flexCenter"><FaBars />
@@ -167,7 +167,7 @@ function App() {
                   </Routes>
                 </div>
               </Content>
-              <Footer className="footer">Mephisto - MAL Client Developed by lijidea</Footer>
+              <Footer className="footer">Mephisto MAL Client = (Developed by lijidea)</Footer>
             </Layout>
           </Layout>
         </Layout>

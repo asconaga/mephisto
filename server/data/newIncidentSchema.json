@@ -1,0 +1,103 @@
+{
+    "$schema": "http://json-schema.org/draft-06/schema#",
+    "$ref": "#/definitions/Root",
+    "definitions": {
+        "Root": {
+            "type": "object",
+            "properties": {
+                "incident": {
+                    "$ref": "#/definitions/Incident"
+                }
+            },
+            "title": "Root"
+        },
+        "Incident": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "modelId": {
+                    "type": "integer"
+                },
+                "notes": {
+                    "type": "string"
+                },
+                "userName": {
+                    "type": "string"
+                },
+                "times": {
+                    "$ref": "#/definitions/Times"
+                },
+                "position": {
+                    "$ref": "#/definitions/Position"
+                },
+                "targets": {
+                    "$ref": "#/definitions/Targets"
+                }
+            },
+
+            "title": "Incident"
+        },
+        "Position": {
+            "type": "object",
+            "properties": {
+                "lat": {
+                    "type": "number"
+                },
+                "lon": {
+                    "type": "number"
+                }
+            },
+
+            "title": "Position"
+        },
+        "Targets": {
+            "type": "object",
+
+            "properties": {
+                "target": {
+                    "anyOf": [                    
+                        {"$ref": "#/definitions/Target"},
+                        {
+                            "type": "array",
+                            "items": { "$ref": "#/definitions/Target" }
+                        }
+                    ]
+                }
+            },
+            "title": "Targets"
+        },
+        "Target": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "type": {
+                    "type": "integer"
+                }
+            },
+
+            "title": "Target"
+        },
+        "Times": {
+            "type": "object",
+            "properties": {
+                "driftStart": {
+                    "type": "integer"
+                },
+                "datum": {
+                    "type": "integer"
+                }
+            },
+            "title": "Times"
+        }
+    }
+}

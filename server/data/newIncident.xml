@@ -1,0 +1,23 @@
+  <incident>
+    <id>21012</id>
+    <name>Thailand Test 1</name>
+    <modelId>1</modelId>
+    <notes>MRCC received information</notes>
+    <userName>Ian Smith</userName>
+    <times>
+        <driftStart>1550466000</driftStart>
+        <datum>1550487600</datum>
+    </times>    
+    <position>
+        <lat>12.65</lat>
+        <lon>100.8</lon>
+    </position>
+    <targets>
+      <target>
+        <id>45871325</id>
+        <name>Alpha Bravo</name>
+        <type>7</type>
+      </target>    
+    </targets>
+  </incident>
+

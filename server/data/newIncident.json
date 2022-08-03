@@ -1,0 +1,24 @@
+{
+  "incident": {
+    "id": 21012,
+    "name": "Thailand Test 1",
+    "modelId": 1,
+    "notes": "MRCC received information",
+    "userName": "Ian Smith",
+    "times": {
+      "driftStart": 1550466000,
+      "datum": 1550487600
+    },
+    "position": {
+      "lat": 12.65,
+      "lon": 100.8
+    },
+    "targets": {
+      "target": {
+        "id": 45871325,
+        "name": "Alpha Bravo",
+        "type": 7
+      }
+    }
+  }
+}

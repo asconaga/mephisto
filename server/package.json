@@ -1,0 +1,32 @@
+{
+  "dependencies": {
+    "bcrypt": "^5.0.1",
+    "express": "^4.18.1",
+    "express-generator": "^4.16.1",
+    "node-flat-db": "^0.2.1",
+    "nodemon": "^2.0.19",
+    "uuid": "^8.3.2",
+    "xml2js": "^0.4.23"
+  },
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon -e js server.js"
+  },
+  "name": "node02",
+  "version": "1.0.0",
+  "description": "My first node.js app",
+  "main": "server.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/asconaga/node02.git"
+  },
+  "keywords": [
+    "node.js"
+  ],
+  "author": "asconaga",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/asconaga/node02/issues"
+  },
+  "homepage": "https://github.com/asconaga/node02#readme"
+}
