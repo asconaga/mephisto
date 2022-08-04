@@ -1,7 +1,7 @@
-const bcrypt = require ('bcrypt');
+const bcrypt = require('bcrypt');
 const { v4: uuidv4 } = require('uuid');
 
-const flatDB = require('node-flat-db')
+const flatDB = require('node-flat-db');
 const storage = require('node-flat-db/file-sync');
 
 class AdminRegister {
@@ -24,7 +24,7 @@ class AdminController {
         let szMessage = "Incorrect object definition";
         let status = 400;
 
-        let bIsValid = true;
+        // let bIsValid = true;
 
         try {
             let body = JSON.parse(req.body);
@@ -65,20 +65,20 @@ class AdminController {
         } catch (err) {
             console.log(err.message);
             szMessage = err.message;
-            bIsValid = false;
+            // bIsValid = false;
         }
 
         const pStatus = res.status(status);
 
         pStatus.send(szMessage);
-    })
+    });
 
     getRegister = (req, res) => {
         const pStatus = res.status(200);
 
         const dbAdmin = db(this.dbTable).value();
 
-        let adminObj = {admin: {user: []}};    
+        let adminObj = { admin: { user: [] } };
 
         for (let i = 0; i < dbAdmin.length; i++) {
             adminObj.admin.user.push({ email: dbAdmin[i].email, key: dbAdmin[i].key });
@@ -87,13 +87,13 @@ class AdminController {
         const szRet = this.utilObj.makePretty(adminObj);
 
         pStatus.send(szRet);
-    }
+    };
 
     postRegister = (async (req, res) => {
         let szMessage = "Incorrect object definition";
         let status = 400;
 
-        let bIsValid = true;
+        // let bIsValid = true;
 
         try {
             let body = JSON.parse(req.body);
@@ -104,13 +104,13 @@ class AdminController {
                 if (foundRegister === undefined) {
                     status = 200;
 
-                    const hashedPassword = await bcrypt.hash(body.password, 10)
+                    const hashedPassword = await bcrypt.hash(body.password, 10);
 
                     const newRegister = new AdminRegister(body.email, hashedPassword);
 
                     db(this.dbTable).push(newRegister);
 
-                    szMessage = JSON.stringify({ "key": newRegister.key, "email": newRegister.email});
+                    szMessage = JSON.stringify({ "key": newRegister.key, "email": newRegister.email });
                 }
                 else {
                     szMessage = JSON.stringify({ message: 'User already registered' });
@@ -119,13 +119,13 @@ class AdminController {
         } catch (err) {
             console.log(err.message);
             szMessage = err.message;
-            bIsValid = false;
+            // bIsValid = false;
         }
 
         const pStatus = res.status(status);
 
         pStatus.send(szMessage);
     });
-};
+}
 
 module.exports = AdminController;

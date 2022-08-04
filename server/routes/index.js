@@ -9,9 +9,8 @@ const servicesRouter = require('./services');
 const adminRouter = require('./admin');
 
 class Util {
-
     constructor() {
-     
+
         this.id = 1;
         this.uuidv4 = uuidv4;
 
@@ -28,18 +27,18 @@ class Util {
     }
 
     static count = 2112;
- 
+
     static helper() {
         console.log("hi i am the helper");
-    }  
-  }
+    }
+}
 
 // we pass this obj down to the routes
 let utilObj = new Util();
 
-module.exports = params => {
+module.exports = () => {
     router.get('/', (req, res) => {
-        const pStatus = res.status(200);
+        res.status(200);
 
         res.render('index', { title: "Mephisto - MAL Server", header: "MAL" });
     });

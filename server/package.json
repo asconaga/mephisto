@@ -28,5 +28,10 @@
   "bugs": {
     "url": "https://github.com/asconaga/node02/issues"
   },
-  "homepage": "https://github.com/asconaga/node02#readme"
+  "homepage": "https://github.com/asconaga/node02#readme",
+  "devDependencies": {
+    "eslint": "^8.21.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.26.0"
+  }
 }

@@ -5,7 +5,7 @@ const xml2js = require("xml2js");
 
 const { v4: uuidv4 } = require('uuid');
 
-const flatDB = require('node-flat-db')
+const flatDB = require('node-flat-db');
 const storage = require('node-flat-db/file-sync');
 
 class Book {
@@ -16,7 +16,7 @@ class Book {
     }
 }
 
-const db = flatDB('db/db.json', { storage })
+const db = flatDB('db/db.json', { storage });
 
 router
     .route('/')
@@ -36,7 +36,7 @@ router
             const builder = new xml2js.Builder({ explicitChildren: true });
 
             res.contentType = "application/xml";
-            res.setHeader("Content-Type", "application/xml");                       
+            res.setHeader("Content-Type", "application/xml");
 
             let rootLocal = { "root": { "books": dbBooks } };
 
@@ -98,8 +98,8 @@ router
                         const builder = new xml2js.Builder({ explicitChildren: true });
 
                         szMessage = builder.buildObject(newBook);
-                    };
-                })
+                    }
+                });
             } catch (err) {
                 szMessage = err.message;
             }
@@ -145,7 +145,7 @@ router
             const builder = new xml2js.Builder({ explicitChildren: true });
 
             res.contentType = "application/xml";
-            res.setHeader("Content-Type", "application/xml");            
+            res.setHeader("Content-Type", "application/xml");
 
             let rootLocal = { "books": foundBook };
 
@@ -163,8 +163,8 @@ router
     .delete((req, res) => {
         const { id } = req.params;
 
-        let retval = db('books').remove({ id: id })
-    
+        let retval = db('books').remove({ id: id });
+
         const pStatus = res.status(retval.length === 0 ? 404 : 200);
 
         pStatus.send(JSON.stringify(retval));

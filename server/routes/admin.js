@@ -12,5 +12,5 @@ module.exports = (utilObj) => {
         .get(ctrAdmin.getRegister)
         .post(ctrAdmin.postRegister);
 
-        return router;
+    return router;
 };
