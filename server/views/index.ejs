@@ -1,17 +1,21 @@
 ﻿<!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
+
 <head>
     <meta charset="utf-8" />
-    <title><%=title%></title>
+    <title>
+        <%=title%>
+    </title>
     <link rel="icon" type="image/x-icon" href="static/favicon.ico">
-    <link rel="stylesheet" href="static/index.css"> 
+    <link rel="stylesheet" href="static/index.css">
 </head>
 
 <body>
     <div class="app">
         <div class="header">
-            <p>SARIS <%= locals.header %></p>
+            <p>SARIS <%= locals.header %>
+            </p>
         </div>
         <div class="content">
             <table id="ctlTable">
@@ -26,14 +30,20 @@
                     <td><input name="detail" id="ctlDetail" type="text"></td>
                 </tr>
             </table>
-    
+
             <ul id="books"></ul>
-    
+
             <div class="flexContainer">
                 <button id="ctlAddBook" type="button" onclick="OnAddBook()">Add Book</button>
                 <button id="ctlInitial" type="button" onclick="OnSetupInitial()">Initial Setup</button>
                 <button type="button" onclick="OnListBooks()">List Books</button>
             </div>
+            <div class="flexContainer">
+                <button id="ctlPoll" type="button" onclick="OnPoll()">Poll</button>
+                <button id="ctlMessge" type="button" onclick="OnMessage()">Message</button>
+            </div>
+
+            <div id="messages"></div>
         </div>
         <div class="footer">Date: 2022</div>
     </div>
@@ -41,12 +51,12 @@
 
     <script type="text/javascript" language="javascript">
         async function DoFetch(cmd, uri, newObj, callback) {
-           let request =  {
+            let request = {
                 method: cmd,
                 mode: 'cors',
                 redirect: 'follow',
-                headers: { "Content-type": "application/json"}
-            }     
+                headers: { "Content-type": "application/json" }
+            }
 
             if (newObj !== null) {
                 request['body'] = JSON.stringify(newObj);
@@ -54,9 +64,9 @@
 
             await fetch(uri, request)
                 .then(callback)
-                .catch(function(error) {
+                .catch(function (error) {
                     console.log('Request failed', error);
-            })
+                })
         };
 
         const ctlAddBook = document.getElementById("ctlAddBook");
@@ -81,6 +91,33 @@
         arrInputs.forEach(ctlInput => {
             ctlInput.addEventListener('input', BooksInputHandler);
         });
+
+        let bIsPolling = false;
+
+        const OnMessage = () => {
+            console.log(ctlTitle.value);
+
+            fetch(`/api/admin/message?key=${ctlTitle.value}`, {
+                method: "POST",
+                body: {}
+            });
+        }
+
+        function OnPoll() {
+            bIsPolling = !bIsPolling;
+
+            console.log(`polling ${bIsPolling}`);
+
+            if (bIsPolling)
+                poll(); // start the polling operation
+        }
+
+        function poll() {
+            fetch(`/api/admin/poll?key=${ctlTitle.value}&tim=${Date.now()}`)
+                .then((res) => { if (res.status !== 200) bIsPolling = false; return res.text(); })
+                .then((message) => (document.getElementById("messages").innerHTML += `${message} <br>`))
+                .finally(() => { if (bIsPolling) poll() });
+        }
 
         async function OnAddBook() {
             const szTitle = ctlTitle.value;
@@ -149,8 +186,7 @@
         }
 
         async function OnListBooksCallBack(response) {
-            if (response.ok) 
-            {
+            if (response.ok) {
                 const tbody = ctlTable.children[0];
                 const nElems = tbody.children.length;
 
@@ -168,4 +204,5 @@
         BooksInputHandler(); // run initially to disable Add Course
     </script>
 </body>
-</html >
+
+</html>
