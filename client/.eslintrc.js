@@ -26,6 +26,7 @@ module.exports = {
         indent: ["error", 4],
         semi: ["error", "always"],
         "object-curly-spacing": ["error", "always"],
+        "no-unused-vars": "off",
         "space-in-parens": ["error", "never"],
         "space-infix-ops": ["error", { int32Hint: false }],
         "react-hooks/rules-of-hooks": "error",

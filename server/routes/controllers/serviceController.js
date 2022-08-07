@@ -42,13 +42,36 @@ class ServicesController {
     getServices = (req, res) => {
         const dbServices = db(this.utilObj.tabServices).value();
 
-        let serviceObj = { services: { service: [] } };
+        let szRet = '';
 
-        for (let i = 0; i < dbServices.length; i++) {
-            serviceObj.services.service.push({ name: dbServices[i].name });
+        if (req.query?.complete === 'true') {
+
+            // first remove some uncessary stuff
+            dbServices.forEach(serviceElem => {
+                delete serviceElem.owner;
+
+                serviceElem.methods.forEach(methodElem => {
+                    if (methodElem.posts !== undefined) {
+                        methodElem.posts.forEach(postElem => {
+                            delete postElem.data;
+                        });
+
+                    }
+                });
+            });
+
+            szRet = this.utilObj.makePretty(dbServices);
         }
+        else {
 
-        const szRet = this.utilObj.makePretty(serviceObj);
+            let serviceObj = { services: { service: [] } };
+
+            for (let i = 0; i < dbServices.length; i++) {
+                serviceObj.services.service.push({ name: dbServices[i].name });
+            }
+
+            szRet = this.utilObj.makePretty(serviceObj);
+        }
 
         const pStatus = res.status(200);
         pStatus.send(szRet);

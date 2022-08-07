@@ -1,5 +1,5 @@
 import { Carousel, Col, message, Row } from 'antd';
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 const cardItems = [
@@ -45,22 +45,24 @@ const ServicesPage = () => {
 };
 
 const ServicesSelection = () => {
-    const API_URL = 'http://localhost:1337/api/services/';
-    // const [fetchItems, setFetchItems] = useState([]); 
+    const API_FULL = 'http://localhost:1337';
+    const API_URL = API_FULL + '/api/services?complete=true';
+    const [fetchItems, setFetchItems] = useState([]);
 
     const info = (msg) => {
         message.success(msg);
     };
-
 
     useEffect(() => {
         async function reqCallback(response) {
             if (response.ok) {
                 const resObj = await response.json();
 
-                console.log();
+                console.log(resObj);
 
-                const nServices = resObj.services.service.length;
+                setFetchItems(resObj);
+
+                const nServices = resObj.length;
 
                 const szServiceMsm = "Service" + ((nServices !== 1) ? "s" : "");
 
@@ -92,22 +94,11 @@ const ServicesSelection = () => {
                     <h2>Services</h2>
                     <p>Information on the services available along with their associated methods and associated posts are available below.</p>
                 </div>
-                <Row gutter={[16, 16]}>
-                    {cardItems.map(item => {
-                        return (
-                            <Col md={{ span: 8 }} key={item.key}>
-                                <div className="content">
-                                    <ServicesCarousel subject={item.title} />
-                                </div>
-                            </Col>
-                        );
-                    })}
-                </Row>
+                {getContent(fetchItems)}
             </div>
         </div>
     );
 };
-
 
 const ServicesCarousel = (props) => {
     return (
@@ -115,7 +106,7 @@ const ServicesCarousel = (props) => {
             <div className="container-fluid">
                 <h2>{props.subject}</h2>
                 <Carousel>
-                    {carItems.map(item => {
+                    {/* {carItems.map(item => {
                         return (
                             <div key={item.key} className="container-fluid">
                                 <div className="content">
@@ -124,7 +115,15 @@ const ServicesCarousel = (props) => {
                                 </div>
                             </div>
                         );
-                    })}
+                    })} */}
+
+                    <div key={1} className="container-fluid">
+                        <div className="content">
+                            <h3>fred</h3>
+                            <p>billy</p>
+                        </div>
+                    </div>
+
                 </Carousel>
             </div>
         </div>
@@ -133,6 +132,82 @@ const ServicesCarousel = (props) => {
 
 ServicesCarousel.propTypes = {
     subject: PropTypes.string.isRequired
+};
+
+const getContent = (fItems) => {
+    let retVal = [];
+
+    // let retVal = <Row gutter={[16, 16]}>
+    //     {cardItems.map(item => {
+    //         return (
+    //             <Col md={{ span: 8 }} key={item.key}>
+    //                 <div className="content">
+    //                     <ServicesCarousel subject={item.title} />
+    //                 </div>
+    //             </Col>
+    //         );
+    //     })}
+    // </Row>;
+
+    const onChange = (index) => {
+        console.log(index);
+    };
+
+    let rowArr = [];
+    cardItems.forEach(item => {
+        rowArr.push(
+            <Col md={{ span: 8 }} key={item.key}>
+                <div className="content">
+                    <div className="container-fluid">
+                        <h2>{item.title}</h2>
+                        {<Carousel beforeChange={onChange}>
+                            <div key={1} className="container-fluid">
+                                <div className="content">
+                                    <h3>fred</h3>
+                                    <p>billy</p>
+                                </div>
+                            </div>
+                            <div key={2} className="container-fluid">
+                                <div className="content">
+                                    <h3>fred</h3>
+                                    <p>billy</p>
+                                </div>
+                            </div>
+                        </Carousel>}
+                    </div>
+                </div>
+            </Col>
+        );
+    });
+    retVal = <Row gutter={[16, 16]}>{rowArr}</Row>;
+
+
+
+    let tmpArr = [];
+    fItems.forEach(item => {
+        tmpArr.push(
+            <div className="content">
+                <p>{item.name}</p>
+            </div>);
+    });
+
+
+    // const retVal = <div>{tmpArr}</div>;
+    {/* {cardItems.map(item => {
+            return (
+                <div key={item.key}>
+                    <div className="content">
+                        <p>{item.title}</p>
+                    </div>
+                </div>
+            );
+        })}
+    </div>; */}
+
+
+
+
+    return retVal;
 };
 
 

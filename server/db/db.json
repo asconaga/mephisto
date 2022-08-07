@@ -60,7 +60,38 @@
       "methods": [
         {
           "key": "83354767-fe41-4b8d-bc6f-0426367b2c34",
-          "name": "config"
+          "name": "config",
+          "posts": [
+            {
+              "key": "0d6579ca-f548-432e-b5a3-4ed9ec275412",
+              "date": 1659853352879,
+              "status": 1,
+              "data": {
+                "incident": {
+                  "id": 21012,
+                  "name": "Thailand Test 1",
+                  "modelId": 1,
+                  "notes": "MRCC received information",
+                  "userName": "Ian Smith",
+                  "times": {
+                    "driftStart": 1550466000,
+                    "datum": 1550487600
+                  },
+                  "position": {
+                    "lat": 12.65,
+                    "lon": 100.8
+                  },
+                  "targets": {
+                    "target": {
+                      "id": 45871325,
+                      "name": "Alpha Bravo",
+                      "type": 7
+                    }
+                  }
+                }
+              }
+            }
+          ]
         },
         {
           "key": "2a6d44bf-7b74-49ee-a54b-acc6827dc07e",
