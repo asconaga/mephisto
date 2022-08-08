@@ -148,7 +148,7 @@ function App() {
                         </Popover>
                     </Header>
                     <Layout className="innerLayout">
-                        <Sider breakpoint="lg" collapsedWidth={48}>
+                        <Sider collapsed={true} collapsedWidth={48}>
                             <Menu
                                 mode="inline"
                                 style={{ height: '100%' }} >
@@ -167,7 +167,7 @@ function App() {
                                     </Routes>
                                 </div>
                             </Content>
-                            <Footer className="footer">Mephisto MAL Client = (Developed by lijidea)</Footer>
+                            <Footer className="footer">Mephisto MAL Client = &lsquo;Developed by lijidea&rsquo;</Footer>
                         </Layout>
                     </Layout>
                 </Layout>

@@ -1,6 +1,6 @@
 import { Carousel, Col, message, Row } from 'antd';
 import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
+import { FaFrown } from 'react-icons/fa';
 
 const testItems = [
     {
@@ -11,7 +11,23 @@ const testItems = [
             {
                 "key": "c881b7cd-083d-4537-bcb8-0fc00c3664a3",
                 "name": "woof",
-                "description": "woof information"
+                "description": "woof information",
+                "posts": [
+                    {
+                        "key": "0d6579ca-f548-432e-b5a3-4ed9ec275412",
+                        "date": 1659853352879,
+                        "name": "Dog Test 1",
+                        "description": "post information",
+                        "status": 1
+                    },
+                    {
+                        "key": "0d6579ca-f548-432e-b5a3-4ed9ec275412",
+                        "date": 1659853352879,
+                        "name": "Dog Test 2",
+                        "description": "post information",
+                        "status": 1
+                    }
+                ]
             },
             {
                 "key": "799d812a-2e16-4db6-a711-06199d9eced1",
@@ -28,12 +44,12 @@ const testItems = [
     {
         "key": "34a03ee6-2c79-44fb-9432-a9b3870826ab",
         "name": "sarIncident",
-        "description": "MsarIncident information",
+        "description": "sarIncident information",
         "methods": [
             {
                 "key": "83354767-fe41-4b8d-bc6f-0426367b2c34",
                 "name": "config",
-                "description": "configinformation",
+                "description": "config information",
                 "posts": [
                     {
                         "key": "0d6579ca-f548-432e-b5a3-4ed9ec275412",
@@ -51,22 +67,6 @@ const testItems = [
             }
         ]
     }
-];
-
-const cardItems = [
-    {
-        key: '1',
-        title: 'Services',
-    },
-    {
-        key: '2',
-        title: 'Methods',
-
-    },
-    {
-        key: '3',
-        title: 'Posts',
-    },
 ];
 
 const carItems = [
@@ -99,6 +99,7 @@ const ServicesSelection = () => {
     const API_FULL = 'http://localhost:1337';
     const API_URL = API_FULL + '/api/services?complete=true';
     const [fetchItems, setFetchItems] = useState([]);
+    const [carouselState, setCarouselState] = useState({ service: 0, method: 0 });
 
     const info = (msg) => {
         message.success(msg);
@@ -106,6 +107,7 @@ const ServicesSelection = () => {
 
     useEffect(() => {
         setFetchItems(testItems);
+        console.log('useEffect');
     }, []);
     // useEffect(() => {
     //     async function reqCallback(response) {
@@ -145,146 +147,99 @@ const ServicesSelection = () => {
         <div className="block servicesBlock">
             <div className="container-fluid">
                 <div className="titleHolder">
-                    <h2>Services</h2>
+                    <h2>Services </h2>
                     <p>Information on the services available along with their associated methods and associated posts are available below.</p>
                 </div>
-                {getContent(fetchItems)}
+                {getContent(fetchItems, carouselState, setCarouselState)}
             </div>
         </div>
     );
 };
 
-const ServicesCarousel = (props) => {
-    return (
-        <div>
-            <div className="container-fluid">
-                <h2>{props.subject}</h2>
-                <Carousel>
-                    {/* {carItems.map(item => {
-                        return (
-                            <div key={item.key} className="container-fluid">
-                                <div className="content">
-                                    <h3>{item.title}</h3>
-                                    <p>{item.content}</p>
-                                </div>
-                            </div>
-                        );
-                    })} */}
-
-                    <div key={1} className="container-fluid">
-                        <div className="content">
-                            <h3>fred</h3>
-                            <p>billy</p>
-                        </div>
-                    </div>
-
-                </Carousel>
-            </div>
-        </div>
-    );
-};
-
-ServicesCarousel.propTypes = {
-    subject: PropTypes.string.isRequired
-};
-
-const getContent = (serviceArr) => {
+const getContent = (serviceArr, carouselState, setCarouselState) => {
     let retVal = [];
 
-    let nService = 1;
-    let nMethod = 0;
-
-    console.log(serviceArr); // i am being called twice
+    // console.log(serviceArr); // i am being called twice, initially then on setting
 
     if (serviceArr.length > 0) {
 
-        serviceArr.forEach(service => {
-            retVal.push(<p>{service.name} - {service.description}</p>);
-        });
+        const sectionItems = [
+            {
+                key: '1',
+                title: 'Services',
+            },
+            {
+                key: '2',
+                title: 'Methods',
 
-        let methodsArr = serviceArr[nService]?.methods ?? [{
-            "name": serviceArr[nService].name,
-            "description": "No methods"
-        }];
+            },
+            {
+                key: '3',
+                title: 'Posts',
+            },
+        ];
 
-        methodsArr.forEach(method => {
-            retVal.push(<p>---{method.name} - {method.description}</p>);
-        });
+        sectionItems[0]['arr'] = serviceArr;
+        sectionItems[1]['arr'] = serviceArr[carouselState.service]?.methods;
+        sectionItems[2]['arr'] = serviceArr[carouselState.service]?.methods[carouselState.method]?.posts;
 
-        let postsArr = methodsArr[nMethod]?.posts ?? [{
-            "name": methodsArr[nMethod].name,
-            "description": "No posts"
-        }];
-        postsArr.forEach(post => {
-            retVal.push(<p>-------{post.name} - {post.description}</p>);
-        });
+        let tmpArr = [];
 
+        const onChangeService = (index) => {
+            const cloneService = { ...carouselState };
 
+            cloneService.service = index;
 
-        // let retVal = <Row gutter={[16, 16]}>
-        //     {cardItems.map(item => {
-        //         return (
-        //             <Col md={{ span: 8 }} key={item.key}>
-        //                 <div className="content">
-        //                     <ServicesCarousel subject={item.title} />
-        //                 </div>
-        //             </Col>
-        //         );
-        //     })}
-        // </Row>;
-    }
+            setCarouselState(cloneService);
+        };
 
-    const onChange = (index) => {
-        console.log(index);
-    };
+        const onChangeMethod = (index) => {
+            const cloneService = { ...carouselState };
 
-    // let rowArr = [];
-    // cardItems.forEach(item => {
-    //     rowArr.push(
-    //         <Col md={{ span: 8 }} key={item.key}>
-    //             <div className="content">
-    //                 <div className="container-fluid">
-    //                     <h2>{item.title}</h2>
-    //                     {<Carousel beforeChange={onChange}>
-    //                         <div key={1} className="container-fluid">
-    //                             <div className="content">
-    //                                 <h3>fred</h3>
-    //                                 <p>billy</p>
-    //                             </div>
-    //                         </div>
-    //                         <div key={2} className="container-fluid">
-    //                             <div className="content">
-    //                                 <h3>fred</h3>
-    //                                 <p>billy</p>
-    //                             </div>
-    //                         </div>
-    //                     </Carousel>}
-    //                 </div>
-    //             </div>
-    //         </Col>
-    //     );
-    // });
-    // retVal = <Row gutter={[16, 16]}>{rowArr}</Row>;  
+            cloneService.method = index;
 
+            setCarouselState(cloneService);
+        };
 
-    // const retVal = <div>{tmpArr}</div>;
-    {/* {cardItems.map(item => {
-            return (
-                <div key={item.key}>
-                    <div className="content">
-                        <p>{item.title}</p>
+        const arrChangers = [onChangeService, onChangeMethod, null];
+
+        for (let index = 0; index < sectionItems.length; index++) {
+            const elemArr = sectionItems[index];
+
+            let tmpConArr = [];
+
+            if ((elemArr?.arr === undefined)) {
+                elemArr.arr = [{
+                    "name": "no " + sectionItems[index].title,
+                    "description": <FaFrown />,
+                }];
+            }
+
+            elemArr.arr?.forEach(service => {
+                tmpConArr.push(
+                    <div className="container-fluid">
+                        <div className="innerContent">
+                            <h1>{service.name}</h1>
+                            <p>{service.description}</p>
+                        </div>
                     </div>
+                );
+            });
+
+            tmpArr.push(<Col md={{ span: 8 }} key={elemArr.key}>
+                <div className="content">
+                    <h3>{elemArr.title}</h3>
+                    <Carousel afterChange={arrChangers[index]}>
+                        {tmpConArr}
+                    </Carousel>
                 </div>
-            );
-        })}
-    </div>; */}
-
-
-
+            </Col>);
+        }
+        retVal = <Row gutter={[16, 16]}>{tmpArr} </Row>;
+    }
 
     return retVal;
 };
-
 
 export default ServicesPage;
 

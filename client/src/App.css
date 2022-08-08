@@ -2,7 +2,65 @@
 
 @import 'antd/dist/antd.min.css';
 
-@import url('https://fonts.googleapis.com/css?family=Bungee+Shade&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Oleo+Script+Swash+Caps&display=swap');
+
+:root {
+  --primary-color: teal;
+  --back-color: whitesmoke;
+  /* --ant-primary-color: var(--primary-color); */
+  
+}
+.ant-menu {
+  background-image: linear-gradient(to bottom, var(--primary-color),MediumSeaGreen)
+}
+
+.ant-menu-submenu:hover, .ant-menu-item-selected, .ant-menu-item-active svg {
+  color: var(--back-color);
+}
+
+.ant-menu li.ant-menu-item:hover {
+  color: var(--back-color);
+}
+
+.ant-menu li.ant-menu-item-selected
+{
+  color: var(--primary-color);
+}
+
+a {
+  color: var(--primary-color);
+}
+
+.slick-dots li.slick-active button {
+  background: var(--primary-color)!important;
+}
+
+.ant-menu-item-active:hover, .ant-menu-item-selected a,  .ant-menu-item:hover, .ant-menu-item a:hover {
+  color: var(--back-color);
+}
+
+.ant-menu-vertical .ant-menu-submenu-selected, .ant-menu-vertical .ant-menu-submenu-selected:hover   {
+  color: var(--back-color);
+}
+
+a:hover {
+  color: var(--primary-color);
+  text-decoration:underline;
+}
+
+.ant-btn-primary {
+  background-color:  var(--primary-color);
+  border-color: var(--primary-color);
+}
+
+.ant-btn-primary:hover {
+  background-color:  var(--primary-color);
+  opacity: .5;
+}
+
+.ant-menu-inline .ant-menu-item:after {
+  border-right: 3px solid var(--primary-color);
+}
 
 body {
   line-height: 1.6;
@@ -27,11 +85,21 @@ body {
 .logo {
   float: left;
   font-size: 30px;  
-  font-family: 'Bungee Shade', cursive;
+  font-family: 'Oleo Script Swash Caps', cursive;
+  color: var(--primary-color);
+}
+
+.logo a {
+  color: var(--primary-color);
+}
+
+.logo a:hover {
+  opacity: 0.85;
 }
 
 .logo svg {
   font-size: 24px;  
+  color: var(--primary-color);
 }
 
 .header {
@@ -40,14 +108,16 @@ body {
   width: 100%;
   padding: 0 20px;
   height: 48px;  
+
 }
 
 .footer {
   text-align: center;
   margin: 0px;
   padding: 10px;
-  font-family: 'Bungee Shade', cursive; 
+  font-family: 'Oleo Script Swash Caps', cursive; 
   font-size: 18px;   
+  color: var(--primary-color); 
 }
 
 .innerLayout {
@@ -59,7 +129,7 @@ body {
 }
 
 .headerUtil svg {
-  color: #1890ff;
+  color: var(--primary-color);
   margin: 0 5px 0 0;
   font-size: 20px;
 }
@@ -75,10 +145,15 @@ body {
   overflow-y: auto;
 }
 
+.titleHolder {
+  text-align: center;
+}
+
 .floater {
 	position:absolute;
 	top:150px;
 	right:20px;
+
 	color:#fff;
 	border-radius: 10px;
 	box-shadow: 2px 2px 3px #999;
@@ -93,6 +168,7 @@ body {
 
 .floater svg{
   font-size: 30px;
+  color: var(--primary-color);
   margin: 0px 0 0px -10px;
 }
 
@@ -119,13 +195,25 @@ body {
 
 .servicesBlock .icon {
   font-size: 40px;
-  color: #1890ff;
+  color: var(--primary-color);
   margin: 0 0 10px;
 }
 
 .servicesBlock .content {
   text-align: center;
-  border: 1px solid black;
+  /* border: 1px solid black; */
   margin: 0px;
   padding: 0px 10px 30px 10px;
+  background-color: white;
+  box-shadow: 0 0 12px 2px white;
+  border-radius: 10px;
+}
+
+.servicesBlock .innerContent {
+  text-align: center;
+  /* border: 1px solid black; */
+  margin: 0px;
+  padding: 0px 10px 30px 10px;
+  background-color: lightgrey;
+  border-radius: 10px;
 }
