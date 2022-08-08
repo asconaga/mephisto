@@ -35,67 +35,21 @@
   ],
   "services": [
     {
-      "key": "aaecb368-067c-4d87-b4ec-cfa7a98b702a",
-      "name": "bigDog",
-      "owner": "0ce92734-0068-466b-abf9-42999a241082",
+      "key": "b43cc246-10d5-4cd9-b6a4-1d41904ae054",
+      "name": "custard",
+      "description": "the pudding for me",
       "methods": [
         {
-          "key": "c881b7cd-083d-4537-bcb8-0fc00c3664a3",
-          "name": "woof"
+          "key": "b81b481e-4d0b-4bf3-8412-aeb7517c0f3a",
+          "name": "cool",
+          "description": "the pudding for me",
+          "posts": []
         },
         {
-          "key": "799d812a-2e16-4db6-a711-06199d9eced1",
-          "name": "growl"
-        },
-        {
-          "key": "09c1adc6-d07f-4c53-8569-c35e7dc68dee",
-          "name": "poop"
-        }
-      ]
-    },
-    {
-      "key": "34a03ee6-2c79-44fb-9432-a9b3870826ab",
-      "name": "sarIncident",
-      "owner": "dff7ef8d-f7cb-447e-a4c8-45e549345321",
-      "methods": [
-        {
-          "key": "83354767-fe41-4b8d-bc6f-0426367b2c34",
-          "name": "config",
-          "posts": [
-            {
-              "key": "0d6579ca-f548-432e-b5a3-4ed9ec275412",
-              "date": 1659853352879,
-              "status": 1,
-              "data": {
-                "incident": {
-                  "id": 21012,
-                  "name": "Thailand Test 1",
-                  "modelId": 1,
-                  "notes": "MRCC received information",
-                  "userName": "Ian Smith",
-                  "times": {
-                    "driftStart": 1550466000,
-                    "datum": 1550487600
-                  },
-                  "position": {
-                    "lat": 12.65,
-                    "lon": 100.8
-                  },
-                  "targets": {
-                    "target": {
-                      "id": 45871325,
-                      "name": "Alpha Bravo",
-                      "type": 7
-                    }
-                  }
-                }
-              }
-            }
-          ]
-        },
-        {
-          "key": "2a6d44bf-7b74-49ee-a54b-acc6827dc07e",
-          "name": "results"
+          "key": "22e1addc-4775-421a-9429-878ca7736f93",
+          "name": "warm",
+          "description": "the pudding for me",
+          "posts": []
         }
       ]
     }

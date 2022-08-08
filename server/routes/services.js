@@ -17,7 +17,7 @@ module.exports = (utilObj) => {
 
     router
         .route('/:service/register')
-        .get(ctrServices.getServiceRegister);
+        .post(ctrServices.postServiceRegister);
 
     router
         .route('/:service/:option')

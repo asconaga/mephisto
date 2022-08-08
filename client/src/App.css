@@ -206,7 +206,7 @@ body {
   padding: 0px 10px 30px 10px;
   background-color: white;
   box-shadow: 0 0 12px 2px white;
-  border-radius: 10px;
+  border-radius: 20px;
 }
 
 .servicesBlock .innerContent {
@@ -215,5 +215,8 @@ body {
   margin: 0px;
   padding: 0px 10px 30px 10px;
   background-color: lightgrey;
-  border-radius: 10px;
+}
+
+.servicesBlock .innerContent svg {
+  font-size: 44px;  
 }

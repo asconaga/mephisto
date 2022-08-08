@@ -4,9 +4,10 @@ const storage = require('node-flat-db/file-sync');
 const db = flatDB('db/db.json', { storage });
 
 class Service {
-    constructor(name, ownerKey, utilObj) {
+    constructor(name, description, ownerKey, utilObj) {
         this.key = utilObj.uuidv4();
         this.name = name;
+        this.description = description;
         this.owner = ownerKey;
         this.methods = [];
     }
@@ -22,9 +23,11 @@ class ServicePost {
 }
 
 class ServiceOption {
-    constructor(name, utilObj) {
+    constructor(name, description, utilObj) {
         this.key = utilObj.uuidv4();
         this.name = name;
+        this.description = description;
+        this.posts = [];
     }
 }
 
@@ -78,7 +81,7 @@ class ServicesController {
     };
 
     /* special case for register */
-    getServiceRegister = (req, res) => {
+    postServiceRegister = (req, res) => {
         const { service } = req.params;
 
         let status = 400;
@@ -89,14 +92,28 @@ class ServicesController {
 
         if (foundService === undefined) {
             if (req.validKey) {
-                serviceObj = this.utilObj.makeMessage(`New Service Registered`);
 
-                let newService = new Service(service, req.validKey.key, this.utilObj);
+                try {
+                    let body = JSON.parse(req.body);
 
-                db(this.utilObj.tabServices).push(newService);
+                    if (body.description) {
 
-                status = 200;
+                        console.log(this.utilObj);
 
+                        let newService = new Service(service, body.description, req.validKey.key, this.utilObj);
+
+                        db(this.utilObj.tabServices).push(newService);
+
+                        status = 200;
+
+                        serviceObj = this.utilObj.makeMessage(`New Service Registered`);
+                    }
+                    else {
+                        serviceObj = this.utilObj.makeMessage(`Missing paramters found`);
+                    }
+                } catch (err) {
+                    serviceObj = this.utilObj.makeMessage(err.message);
+                }
             }
             else {
                 serviceObj = this.utilObj.makeMessage(`Valid key must be provided to register service`);
@@ -220,21 +237,7 @@ class ServicesController {
             const foundServiceMethod = foundService.methods.find(({ name }) => name === option);
 
             if (foundServiceMethod === undefined) {
-                if ((req.validKey) && (foundService.owner == req.validKey.key)) {
-                    serviceObj = this.utilObj.makeMessage(`New Method '${option}' registered`);
-
-                    let newServiceOption = new ServiceOption(option, this.utilObj);
-
-                    foundService.methods.push(newServiceOption);
-
-                    db.write(); // commit change to db
-
-                    status = 200;
-                }
-                else {
-                    serviceObj = this.utilObj.makeMessage(
-                        (req.validKey) ? `Service Owner different from method creator` : `Method not found: A valid key must be provided to register a new method`);
-                }
+                serviceObj = this.utilObj.makeMessage(`Method '${option}' not defined`);
             }
             else {
                 status = 200;
@@ -274,28 +277,59 @@ class ServicesController {
 
             if (foundServiceMethod === undefined) {
                 serviceObj = this.utilObj.makeMessage(`Method '${option}' not defined`);
+
+                if ((req.validKey) && (foundService.owner == req.validKey.key)) {
+                    console.log("argh we ar adding");
+
+                    try {
+                        let body = JSON.parse(req.body);
+
+                        if (body.description) {
+
+                            let newServiceOption = new ServiceOption(option, body.description, this.utilObj);
+
+                            foundService.methods.push(newServiceOption);
+
+                            db.write(); // commit change to db
+
+                            status = 200;
+
+                            serviceObj = this.utilObj.makeMessage(`New method '${option}' registered`);
+                        }
+                        else {
+                            serviceObj = this.utilObj.makeMessage(`Missing paramters found`);
+                        }
+                    } catch (err) {
+                        serviceObj = this.utilObj.makeMessage(err.message);
+                    }
+                }
             }
             else {
-                try {
-                    let body = JSON.parse(req.body);
 
-                    if (foundServiceMethod.posts === undefined) {
-                        foundServiceMethod.posts = [];
-                    }
-
-                    let newServicePost = new ServicePost(body, this.utilObj);
-
-                    foundServiceMethod.posts.push(newServicePost);
-
-                    db.write(); // commit change to db
-
-                    serviceObj = this.utilObj.makeMessage(`New post added with key '${newServicePost.key}'`);
-
-                    status = 200;
-
-                } catch (err) {
-                    serviceObj = this.utilObj.makeMessage(err.message);
+                if (req.validKey) {
+                    serviceObj = this.utilObj.makeMessage(`Method '${option}' already defined - does not need a key`);
                 }
+                // YAKUBU: now we add posts 
+                // try {
+                //     let body = JSON.parse(req.body);
+
+                //     if (foundServiceMethod.posts === undefined) {
+                //         foundServiceMethod.posts = [];
+                //     }
+
+                //     let newServicePost = new ServicePost(body, this.utilObj);
+
+                //     foundServiceMethod.posts.push(newServicePost);
+
+                //     db.write(); // commit change to db
+
+                //     serviceObj = this.utilObj.makeMessage(`New post added with key '${newServicePost.key}'`);
+
+                //     status = 200;
+
+                // } catch (err) {
+                //     serviceObj = this.utilObj.makeMessage(err.message);
+                // }
             }
         }
 
