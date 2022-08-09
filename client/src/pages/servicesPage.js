@@ -1,6 +1,6 @@
 import { Carousel, Col, message, Row } from 'antd';
 import React, { useState, useEffect } from 'react';
-import { FaFrown } from 'react-icons/fa';
+import { FaCheckCircle, FaFrown } from 'react-icons/fa';
 
 const ServicesPage = () => {
     return (
@@ -119,7 +119,8 @@ const getContent = (serviceArr, carouselState, setCarouselState) => {
             if ((elemArr?.arr === undefined) || ((elemArr?.arr.length === 0))) {
                 elemArr.arr = [{
                     "name": "no " + sectionItems[index].title,
-                    "description": <FaFrown />,
+                    "description": "no entries",
+                    "image": <FaFrown />
                 }];
             }
 
@@ -127,8 +128,14 @@ const getContent = (serviceArr, carouselState, setCarouselState) => {
                 tmpConArr.push(
                     <div className="container-fluid">
                         <div className="innerContent">
-                            <h1>{service.name}</h1>
-                            <p>{service.description}</p>
+                            <div className="innerImage">
+                                {service?.image ?? <FaCheckCircle />}
+                            </div>
+                            <div className="innerText">
+                                <h1>{service.name}</h1>
+                                <p>{service.description}</p>
+                            </div>
+
                         </div>
                     </div>
                 );
@@ -136,7 +143,7 @@ const getContent = (serviceArr, carouselState, setCarouselState) => {
 
             tmpArr.push(<Col md={{ span: 8 }} key={elemArr.key}>
                 <div className="content">
-                    <h3>{elemArr.title}</h3>
+                    <h2>{elemArr.title}</h2>
                     <Carousel afterChange={arrChangers[index]}>
                         {tmpConArr}
                     </Carousel>

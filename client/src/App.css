@@ -1,38 +1,42 @@
-/* @import 'antd/dist/antd.dark.css'; */
+@import 'antd/dist/antd.dark.css';
 
-@import 'antd/dist/antd.min.css';
+/* @import 'antd/dist/antd.min.css'; */
 
 @import url('https://fonts.googleapis.com/css?family=Oleo+Script+Swash+Caps&display=swap');
 
 :root {
-  --primary-color: teal;
-  --back-color: whitesmoke;
+  --primary-color: whitesmoke ;
+  --back-color: teal;
   /* --ant-primary-color: var(--primary-color); */
   
 }
-.ant-menu {
-  background-image: linear-gradient(to bottom, var(--primary-color),MediumSeaGreen)
-}
+/* 
 
-.ant-menu-submenu:hover, .ant-menu-item-selected, .ant-menu-item-active svg {
-  color: var(--back-color);
-}
 
-.ant-menu li.ant-menu-item:hover {
-  color: var(--back-color);
-}
 
-.ant-menu li.ant-menu-item-selected
-{
-  color: var(--primary-color);
-}
 
 a {
   color: var(--primary-color);
 }
 
-.slick-dots li.slick-active button {
-  background: var(--primary-color)!important;
+
+
+a:hover {
+  color: var(--primary-color);
+  text-decoration:underline;
+}
+
+
+.ant-menu-inline .ant-menu-item:after {
+  border-right: 3px solid var(--primary-color);
+} */
+
+
+.ant-menu {
+  background-image: linear-gradient(to bottom, black, var(--back-color))
+}
+.ant-menu-submenu:hover, .ant-menu-item-selected, .ant-menu-item-active svg {
+  color: var(--back-color);
 }
 
 .ant-menu-item-active:hover, .ant-menu-item-selected a,  .ant-menu-item:hover, .ant-menu-item a:hover {
@@ -43,23 +47,36 @@ a {
   color: var(--back-color);
 }
 
-a:hover {
-  color: var(--primary-color);
-  text-decoration:underline;
+.ant-menu li.ant-menu-item:hover {
+  color: var(--back-color);
+}
+
+.ant-menu li.ant-menu-item-selected
+{
+  color: var(--back-color);
 }
 
 .ant-btn-primary {
-  background-color:  var(--primary-color);
-  border-color: var(--primary-color);
+  background-color:  var(--back-color)!important;
+  border-color: var(--back-color)!important;
 }
 
 .ant-btn-primary:hover {
-  background-color:  var(--primary-color);
+  background-color:  var(--back-color)!important;
   opacity: .5;
 }
 
-.ant-menu-inline .ant-menu-item:after {
-  border-right: 3px solid var(--primary-color);
+.ant-btn:hover {
+  border-color: var(--back-color)!important;
+  color: var(--back-color)!important;
+}
+
+.slick-dots li.slick-active button {
+  background: var(--back-color)!important;
+}
+
+.slick-dots li button {
+  background: var(--primary-color)!important;
 }
 
 body {
@@ -86,11 +103,11 @@ body {
   float: left;
   font-size: 30px;  
   font-family: 'Oleo Script Swash Caps', cursive;
-  color: var(--primary-color);
+  color: var(--back-color);
 }
 
 .logo a {
-  color: var(--primary-color);
+  color: var(--back-color);
 }
 
 .logo a:hover {
@@ -99,7 +116,7 @@ body {
 
 .logo svg {
   font-size: 24px;  
-  color: var(--primary-color);
+  color: var(--back-color);
 }
 
 .header {
@@ -108,7 +125,6 @@ body {
   width: 100%;
   padding: 0 20px;
   height: 48px;  
-
 }
 
 .footer {
@@ -117,7 +133,7 @@ body {
   padding: 10px;
   font-family: 'Oleo Script Swash Caps', cursive; 
   font-size: 18px;   
-  color: var(--primary-color); 
+  color: var(--back-color)!important; 
 }
 
 .innerLayout {
@@ -129,13 +145,13 @@ body {
 }
 
 .headerUtil svg {
-  color: var(--primary-color);
+  color: var(--back-color);
   margin: 0 5px 0 0;
   font-size: 20px;
 }
 
 .main {
-  background: lightgray;
+  background: #333;
   margin: 0 16px;
   padding: 10px;
   display: flex;
@@ -149,11 +165,14 @@ body {
   text-align: center;
 }
 
+.titleHolder h2 {
+  color: var(--back-color);
+}
+
 .floater {
 	position:absolute;
 	top:150px;
 	right:20px;
-
 	color:#fff;
 	border-radius: 10px;
 	box-shadow: 2px 2px 3px #999;
@@ -164,6 +183,14 @@ body {
 	width:40px;
 	height:40px;
 	border-radius:inherit;
+  /* background: var(--back-color); */
+}
+
+.floater .ant-btn:hover {
+	width:40px;
+	height:40px;
+	border-radius:inherit;
+  background: var(--back-color);
 }
 
 .floater svg{
@@ -183,7 +210,7 @@ body {
 /* --- block --- */
 .block {
   padding: 60px 0;
-  border-bottom: 1px solid #d9d9d9;
+  border-bottom: 1px solid var(--back-color);
 }
 
 /* --- services --- */
@@ -204,17 +231,42 @@ body {
   /* border: 1px solid black; */
   margin: 0px;
   padding: 0px 10px 30px 10px;
-  background-color: white;
-  box-shadow: 0 0 12px 2px white;
+  background-color: #181818;
+	box-shadow: 2px 2px 3px #999;
   border-radius: 20px;
 }
 
+.servicesBlock .content h2 {
+  color: var(--back-color);
+}
+
 .servicesBlock .innerContent {
+  display: inline-grid;
+  grid-template-columns: auto auto auto;
   text-align: center;
-  /* border: 1px solid black; */
+  border: 1px solid var(--back-color);
   margin: 0px;
-  padding: 0px 10px 30px 10px;
-  background-color: lightgrey;
+  background-color: #333;
+}
+
+.servicesBlock .innerContent .innerImage {
+  display: flex;
+  /* height: 100%; */
+  background: var(--back-color);
+  border-right: 1px solid var(--back-color);
+  padding: 0px 10px;  
+  align-items: center;
+}
+
+.servicesBlock .innerContent .innerText {
+  height: 100%;
+  /* background: red; */
+  padding: 0px 20px 30px 20px;
+}
+
+
+.servicesBlock .innerContent h1 {
+  color: var(--back-color);
 }
 
 .servicesBlock .innerContent svg {

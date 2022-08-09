@@ -261,6 +261,21 @@ class ServicesController {
         pStatus.send(szMsg);
     };
 
+
+
+    /* special case for method register */
+    postServiceOptionRegister = (req, res) => {
+        const { service, option } = req.params;
+
+        let serviceObj = this.utilObj.makeMessage(`Service '${service}' Method ${option}`);
+
+        let status = 500;
+
+        const pStatus = res.status(status);
+
+        pStatus.send(this.utilObj.makePretty(serviceObj));
+    };
+
     postServiceOption = (req, res) => {
         const { service, option } = req.params;
 

@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import './App.css';
-import { Button, Layout, Menu, Modal, Popover, Result } from 'antd';
+import { Button, Dropdown, Layout, Menu, Modal, Popover, Result } from 'antd';
 import { Link, BrowserRouter, Route, Routes, useParams } from 'react-router-dom';
-import { FaBabyCarriage, FaBars, FaBolt, FaEarlybirds, FaGrunt, FaInfoCircle, FaJenkins, FaMagento, FaMandalorian } from 'react-icons/fa';
+import { FaBabyCarriage, FaBars, FaBolt, FaChevronDown, FaEarlybirds, FaGrunt, FaInfoCircle, FaJenkins, FaMagento, FaMandalorian } from 'react-icons/fa';
 import ServicesPage from './pages/servicesPage';
 
 const { Header, Footer, Sider, Content } = Layout;
@@ -101,6 +101,34 @@ function App() {
         ]),
     ];
 
+    const menu = (
+        <Menu
+            items={[
+                {
+                    key: '1',
+                    label: (
+                        <a target="_blank" rel="noopener noreferrer" href="/about">
+                            1st menu item
+                        </a>
+                    ),
+                },
+                {
+                    key: '2',
+                    label: (
+                        <a target="_blank" rel="noopener noreferrer" href="/services">
+                            3rd menu item (disabled)
+                        </a>
+                    ),
+                },
+                {
+                    key: '3',
+                    danger: true,
+                    label: 'a danger item',
+                },
+            ]}
+        />
+    );
+
     let nextKey = 1;
 
     const createMenuItem = (item) => {
@@ -143,6 +171,9 @@ function App() {
                         <div className="logo flexCenter">
                             <a href="./"><FaBolt />Mephisto</a>
                         </div>
+                        <Dropdown overlay={menu}>
+                            <div className="headerUtil flexCenter"><FaChevronDown /></div>
+                        </Dropdown>
                         <Popover placement="bottomRight" content={content} title="Jack's Menus">
                             <div className="headerUtil flexCenter"><FaBars /></div>
                         </Popover>
