@@ -183,14 +183,14 @@ body {
 	width:40px;
 	height:40px;
 	border-radius:inherit;
-  /* background: var(--back-color); */
+  background: var(--back-color);
 }
 
 .floater .ant-btn:hover {
 	width:40px;
 	height:40px;
 	border-radius:inherit;
-  background: var(--back-color);
+  background: black;
 }
 
 .floater svg{
@@ -228,9 +228,7 @@ body {
 
 .servicesBlock .content {
   text-align: center;
-  /* border: 1px solid black; */
   margin: 0px;
-  padding: 0px 10px 30px 10px;
   background-color: #181818;
 	box-shadow: 2px 2px 3px #999;
   border-radius: 20px;
@@ -247,23 +245,23 @@ body {
   border: 1px solid var(--back-color);
   margin: 0px;
   background-color: #333;
+  height: 100px;
+  width: 300px;
+  margin: 0px 0px 50px 0px;
 }
 
 .servicesBlock .innerContent .innerImage {
   display: flex;
-  /* height: 100%; */
+  width: 80px;
   background: var(--back-color);
-  border-right: 1px solid var(--back-color);
-  padding: 0px 10px;  
-  align-items: center;
+  align-items:center;
+  justify-content: center;
 }
 
 .servicesBlock .innerContent .innerText {
-  height: 100%;
-  /* background: red; */
-  padding: 0px 20px 30px 20px;
+  text-overflow: scroll; 
+  overflow-y: auto;
 }
-
 
 .servicesBlock .innerContent h1 {
   color: var(--back-color);

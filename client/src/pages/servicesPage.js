@@ -1,5 +1,5 @@
 import { Carousel, Col, message, Row } from 'antd';
-import React, { useState, useEffect } from 'react';
+import React, { Component, useState, useEffect } from 'react';
 import { FaCheckCircle, FaFrown } from 'react-icons/fa';
 
 const ServicesPage = () => {
@@ -66,6 +66,36 @@ const ServicesSelection = () => {
         </div>
     );
 };
+
+class CarouselComponent extends Component {
+    render() {
+        const props = {
+            infinite: true,
+            speed: 500,
+            slidesToShow: 3,
+            swipeToSlide: true
+        };
+        return (
+            <div>
+                <Carousel ref={node => (this.carousel = node)} {...props}>
+                    <div>
+                        <h3>1</h3>
+                    </div>
+                    <div>
+                        <h3>2</h3>
+                    </div>
+                    <div>
+                        <h3>3</h3>
+                    </div>
+                    <div>
+                        <h3>4</h3>
+                    </div>
+                </Carousel>
+
+            </div>
+        );
+    }
+}
 
 const getContent = (serviceArr, carouselState, setCarouselState) => {
     let retVal = [];
@@ -157,5 +187,3 @@ const getContent = (serviceArr, carouselState, setCarouselState) => {
 };
 
 export default ServicesPage;
-
-
