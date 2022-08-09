@@ -45,21 +45,23 @@ class ServicesController {
     };
 
     getServices = (req, res) => {
-        const dbServices = [...db(this.utilObj.tabServices).value()];
+        // YAKUBU temp solution to resolve missing owner
+        const dbServicesBase = JSON.parse(JSON.stringify(db(this.utilObj.tabServices).value()));
+
+        let dbServices = dbServicesBase.map((x) => x);
 
         let szRet = '';
 
-        // YAKUBU temp solution to resolve missing owner
         if (req.query?.complete === 'true') {
 
             // first remove some uncessary stuff
             dbServices.forEach(serviceElem => {
-                // delete serviceElem.owner;
+                delete serviceElem.owner;
 
                 serviceElem.methods.forEach(methodElem => {
                     if (methodElem.posts !== undefined) {
                         methodElem.posts.forEach(postElem => {
-                            // delete postElem.data;
+                            delete postElem.data;
                         });
 
                     }
@@ -69,7 +71,6 @@ class ServicesController {
             szRet = this.utilObj.makePretty(dbServices);
         }
         else {
-
             let serviceObj = { services: { service: [] } };
 
             for (let i = 0; i < dbServices.length; i++) {
@@ -340,7 +341,6 @@ class ServicesController {
                 if (req.validKey) {
                     serviceObj = this.utilObj.makeMessage(`Method '${option}' already defined - does not need a key`);
                 }
-                // YAKUBU: now we add posts 
                 try {
                     let body = JSON.parse(req.body);
 
@@ -349,7 +349,7 @@ class ServicesController {
                             foundServiceMethod.posts = [];
                         }
 
-                        let newServicePost = new ServicePost(body.post, body.name, body.detail, this.utilObj);
+                        let newServicePost = new ServicePost(body.post, body.name, body.description, this.utilObj);
 
                         foundServiceMethod.posts.push(newServicePost);
 
