@@ -11,7 +11,7 @@ const ServicesPage = () => {
 };
 
 const ServicesSelection = () => {
-    const API_FULL = 'http://localhost:1337';
+    const API_FULL = '';
     const API_URL = API_FULL + '/api/services?complete=true';
     const [fetchItems, setFetchItems] = useState(null);
     const [carouselState, setCarouselState] = useState({ service: 0, method: 0 });
@@ -67,35 +67,7 @@ const ServicesSelection = () => {
     );
 };
 
-class CarouselComponent extends Component {
-    render() {
-        const props = {
-            infinite: true,
-            speed: 500,
-            slidesToShow: 3,
-            swipeToSlide: true
-        };
-        return (
-            <div>
-                <Carousel ref={node => (this.carousel = node)} {...props}>
-                    <div>
-                        <h3>1</h3>
-                    </div>
-                    <div>
-                        <h3>2</h3>
-                    </div>
-                    <div>
-                        <h3>3</h3>
-                    </div>
-                    <div>
-                        <h3>4</h3>
-                    </div>
-                </Carousel>
 
-            </div>
-        );
-    }
-}
 
 const getContent = (serviceArr, carouselState, setCarouselState) => {
     let retVal = [];
@@ -174,7 +146,7 @@ const getContent = (serviceArr, carouselState, setCarouselState) => {
             tmpArr.push(<Col md={{ span: 8 }} key={elemArr.key}>
                 <div className="content">
                     <h2>{elemArr.title}</h2>
-                    <Carousel afterChange={arrChangers[index]}>
+                    <Carousel arrows={false} dots={true} infinite slidesToShow={1} slidesToScroll={1} swipeToSlide draggable afterChange={arrChangers[index]}>
                         {tmpConArr}
                     </Carousel>
                 </div>

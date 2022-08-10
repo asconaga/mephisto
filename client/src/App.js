@@ -2,8 +2,11 @@ import React, { useState } from 'react';
 import './App.css';
 import { Button, Dropdown, Layout, Menu, Modal, Popover, Result } from 'antd';
 import { Link, BrowserRouter, Route, Routes, useParams } from 'react-router-dom';
-import { FaBabyCarriage, FaBars, FaBolt, FaChevronDown, FaEarlybirds, FaGrunt, FaInfoCircle, FaJenkins, FaMagento, FaMandalorian } from 'react-icons/fa';
+import { FaBabyCarriage, FaBars, FaBolt, FaChevronDown, FaCogs, FaCommentAlt, FaInfoCircle, FaJenkins, FaMagento, FaMandalorian } from 'react-icons/fa';
 import ServicesPage from './pages/servicesPage';
+import HomePage from './pages/homePage';
+import { GiDevilMask } from 'react-icons/gi';
+import { AiFillHome, AiFillInfoCircle } from 'react-icons/ai';
 
 const { Header, Footer, Sider, Content } = Layout;
 
@@ -20,15 +23,6 @@ function App() {
 
     const handleCancel = () => {
         setIsModalVisible(false);
-    };
-
-    const Home = () => {
-        return (
-            <main className="Home">
-                <h2>Home</h2>
-                <p style={{ marginTop: "1rem" }}>This is the home of the app.</p>
-            </main>
-        );
     };
 
     const content = (
@@ -84,10 +78,10 @@ function App() {
     };
 
     const items = [
-        getItem('Home', '/', <FaBolt />),
-        getItem('About', '/about', <FaEarlybirds />),
-        getItem('Services', '/services', <FaGrunt />),
-        getItem('Post 2', '/post/2', <FaJenkins />),
+        getItem('Home', '/', <AiFillHome />),
+        getItem('About', '/about', <AiFillInfoCircle />),
+        getItem('Services', '/services', <FaCogs />),
+        getItem('Post 2', '/post/2', <FaCommentAlt />),
         getItem('404', '/crinky', <FaMagento />),
         getItem('Mando', null, <FaMandalorian />, [
             getItem('Option 5'),
@@ -169,7 +163,7 @@ function App() {
                 <Layout style={{ minHeight: '100vh' }}>
                     <Header className="header">
                         <div className="logo flexCenter">
-                            <a href="./"><FaBolt />Mephisto</a>
+                            <Link to='/'><GiDevilMask /> - Mephisto</Link>
                         </div>
                         <Dropdown overlay={menu}>
                             <div className="headerUtil flexCenter"><FaChevronDown /></div>
@@ -190,7 +184,7 @@ function App() {
                             <Content style={{ display: 'flex' }}>
                                 <div className="main">
                                     <Routes>
-                                        <Route path="/" element={<Home />} />
+                                        <Route path="/" element={<HomePage />} />
                                         <Route path="/services" element={<ServicesPage />} />
                                         <Route path="/about" element={<About />} />
                                         <Route path="/post/:id" element={<PostPage />} />
