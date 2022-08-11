@@ -252,7 +252,13 @@ class ServicesController {
                     serviceObj = { [option]: { posts: [] } };
 
                     for (const element of foundServiceMethod.posts) {
-                        serviceObj[option].posts.push({ key: element.key, date: element.date, status: element.status });
+                        serviceObj[option].posts.push({
+                            name: element.name,
+                            description: element.description,
+                            key: element.key,
+                            date: element.date,
+                            status: element.status
+                        });
                     }
                 }
             }
@@ -355,7 +361,8 @@ class ServicesController {
 
                         db.write(); // commit change to db
 
-                        serviceObj = this.utilObj.makeMessage(`New post added with key '${newServicePost.key}'`);
+                        serviceObj = this.utilObj.makeMessage(`New post '${body.name}' added'`);
+                        serviceObj.key = newServicePost.key;
 
                         status = 200;
                     } else {

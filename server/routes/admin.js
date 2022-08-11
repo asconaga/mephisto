@@ -25,8 +25,9 @@ module.exports = (utilObj) => {
 
             console.log(pool[index].length);
         } else {
-            res.status(404);
-            res.end();
+            res.status(400);
+            res.send("incorrect parameters");
+            // res.end();
         }
 
         return 0;
