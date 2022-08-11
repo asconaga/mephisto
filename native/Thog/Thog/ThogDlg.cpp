@@ -1,37 +1,56 @@
-#include "pch.h"
-#include "framework.h"
-#include "JsonRapid.h"
-#include "JsonRapidDlg.h"
+#include "stdafx.h"
+#include "thog.h"
+#include "thogDlg.h"
+#include "thogCLientThread.h"
+#include "DownloadRequest.h"
 #include "afxdialogex.h"
-
-// based on https://github.com/Tencent/rapidjson/
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
 
-CJsonRapidDlg::CJsonRapidDlg(CWnd* pParent /*=nullptr*/) : CDialogEx(IDD_JSONRAPID_DIALOG, pParent)
+// CThogDlg dialog
+
+CThogDlg::CThogDlg(CWnd* pParent /*=NULL*/) : CDialogEx(CThogDlg::IDD, pParent)
 {
 	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
-	m_szOutput = "";
+
+	m_pClientThread = nullptr;
+
+	m_requestData = "";
+	m_statusCode = 0;
+
+	m_baseUrl = "http://192.168.160.44:1337/";
+
+	m_baseUrl = "http://localhost:1337/";
 }
 
-void CJsonRapidDlg::DoDataExchange(CDataExchange* pDX)
+CThogDlg::~CThogDlg()
+{
+}
+
+void CThogDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialogEx::DoDataExchange(pDX);
-	DDX_Text(pDX, IDC_EDIT1, m_szOutput);
+	DDX_Text(pDX, IDC_EDIT2, m_requestData);
+	DDX_Text(pDX, IDC_EDIT3, m_statusCode);
+	DDX_Text(pDX, IDC_EDIT4, m_payloadData);
+	DDX_Control(pDX, IDC_COMBO1, m_ctlMethodCombo);
+	DDX_Control(pDX, IDC_COMBO2, m_ctlCmdCombo);
 }
 
-BEGIN_MESSAGE_MAP(CJsonRapidDlg, CDialogEx)
+BEGIN_MESSAGE_MAP(CThogDlg, CDialogEx)
 	ON_WM_PAINT()
 	ON_WM_QUERYDRAGICON()
-	ON_BN_CLICKED(IDC_BUTTON1, &CJsonRapidDlg::OnCreateJSON)
+	ON_BN_CLICKED(IDC_BUTTON1, OnSend)
+	ON_MESSAGE(WM_MSG, OnMsgSent)
+	ON_WM_DESTROY()
+	ON_CBN_SELCHANGE(IDC_COMBO2, &CThogDlg::OnChangeRequest)
 END_MESSAGE_MAP()
 
+// CThogDlg message handlers
 
-// CJsonRapidDlg message handlers
-
-BOOL CJsonRapidDlg::OnInitDialog()
+BOOL CThogDlg::OnInitDialog()
 {
 	CDialogEx::OnInitDialog();
 
@@ -40,34 +59,76 @@ BOOL CJsonRapidDlg::OnInitDialog()
 	SetIcon(m_hIcon, TRUE);			// Set big icon
 	SetIcon(m_hIcon, FALSE);		// Set small icon
 
-	//const char json[] = " { \"hello\" : \"world\", \"t\" : true , \"f\" : false, \"n\": null, \"i\":123, \"pi\": 3.1416, \"a\":[1, 2, 3, 4] } ";
+	m_ctlCmdCombo.AddString("api/services");
+	m_ctlCmdCombo.AddString("api/services?complete=true");
+	m_ctlCmdCombo.AddString("api/services/sarIncident");
+	m_ctlCmdCombo.AddString("api/services/sarIncident/config");
+	m_ctlCmdCombo.AddString("api/services/jack");
+	m_ctlCmdCombo.AddString("api/services/jack/register");
+	m_ctlCmdCombo.AddString("api/services/jack/off");
+	m_ctlCmdCombo.AddString("api/services/jack/off/register");
 
-	//const char json[] = "{ \"incident\":{\"id\":21012, \"name\" : \"Thailand Test 1\", \"modelId\" : 1, \"notes\" : \"MRCC received information\", \"userName\" : \"Ian Smith\", \"times\" : {\"driftStart\":1550466000, \"datum\" : 1550487600}, \"position\" : {\"lat\":12.65, \"lon\" : 100.8}, \"targets\" : {\"target\":{\"id\":45871325, \"name\" : \"Alpha Bravo\", \"type\" : 7}}} }";
-	const char json[] = "{\"root\":{\"incident\":{\"id\":21012,\"name\":\"Thailand Test 1\",\"modelId\":1,\"notes\":\"MRCC received information\",\"userName\":\"Ian Smith\",\"times\":{\"driftStart\":1550466000,\"datum\":1550487600},\"position\":{\"lat\":12.65,\"lon\":100.8},\"targets\":{\"target\":[{\"id\":45871325,\"name\":\"Alpha Bravo\",\"type\":7},{\"id\":45871325,\"name\":\"Alpha Bravo\",\"type\":7}]}}}}";
+	m_ctlCmdCombo.AddString("api/admin/register");
+	m_ctlCmdCombo.AddString("api/admin/reset");
+	//m_ctlCmdCombo.AddString("api/admin/poll?key=vans");
+	m_ctlCmdCombo.AddString("api/admin/message?key=vans");
+
+	m_ctlCmdCombo.SetCurSel(0);
+
+	m_pClientThread = new CThogClientThread(this);
+	m_pClientThread->CreateThread();
+
+	char* szMethods[] = { "GET", "POST", "DELETE", "PUT" };
+
+	int nMethods = sizeof(szMethods) / sizeof(char *);
+
+	m_payloadData = "{\"description\":\"C++ Test\",\"name\":\"Test 3\",\"post\":{\"sex\":true,\"poop\":\"runny\"}}";
+
+	for (int i = 0; i < nMethods; i++)
+	{
+		m_ctlMethodCombo.AddString(szMethods[i]);
+	}
+
+	m_ctlMethodCombo.SetCurSel(0);
+
+	UpdateData(FALSE);
+		
+	return TRUE;  // return TRUE  unless you set the focus to a control
+}
+
+LRESULT CThogDlg::OnMsgSent(WPARAM nMessage, LPARAM)
+{
+	CRequestResult* pData = m_pClientThread->GetRequestData(nMessage);
+
+	m_statusCode = pData->m_status;
+
+	m_requestData = pData->m_data;
+
 
 	rapidjson::Document document;
 
-	if (document.Parse(json).HasParseError())
+	if (document.Parse(m_requestData).HasParseError())
 	{
 		AfxMessageBox("error");
 	}
 	else
 	{
-		m_szOutput = "";
-
+		m_payloadData = "";
 		RecurseNode(document, "");
 	}
+	   
+	m_requestData.Replace("\n", "\r\n");
 
 	UpdateData(FALSE);
 
-	return TRUE;  // return TRUE  unless you set the focus to a control
+	return TRUE;
 }
 
 // If you add a minimize button to your dialog, you will need the code below
 //  to draw the icon.  For MFC applications using the document/view model,
 //  this is automatically done for you by the framework.
 
-void CJsonRapidDlg::OnPaint()
+void CThogDlg::OnPaint()
 {
 	if (IsIconic())
 	{
@@ -94,12 +155,65 @@ void CJsonRapidDlg::OnPaint()
 
 // The system calls this function to obtain the cursor to display while the user drags
 //  the minimized window.
-HCURSOR CJsonRapidDlg::OnQueryDragIcon()
+HCURSOR CThogDlg::OnQueryDragIcon()
 {
 	return static_cast<HCURSOR>(m_hIcon);
 }
 
-void CJsonRapidDlg::RecurseNode(const rapidjson::Value &node, CString name, int nLevel)
+void CThogDlg::OnSend()
+{
+	UpdateData();
+
+	int nMethod = m_ctlMethodCombo.GetCurSel();
+
+	int nCurCmd = m_ctlCmdCombo.GetCurSel();
+
+	CString szCmd;
+	m_ctlCmdCombo.GetWindowText(szCmd);
+
+	CDownloadRequest* pReq = new CDownloadRequest;
+
+	pReq->m_url = m_baseUrl + szCmd;
+
+	switch (nMethod)
+	{
+	case 0:
+		pReq->m_nVerb = CHttpConnection::HTTP_VERB_GET;
+		break;
+	case 1:
+		pReq->m_nVerb = CHttpConnection::HTTP_VERB_POST;
+		pReq->m_payload = m_payloadData;
+		break;
+	case 2:
+		pReq->m_nVerb = CHttpConnection::HTTP_VERB_DELETE;
+		pReq->m_payload = m_payloadData;
+		break;
+	case 3:
+		pReq->m_nVerb = CHttpConnection::HTTP_VERB_PUT;
+		pReq->m_payload = m_payloadData;
+		break;
+	}
+		
+	m_pClientThread->AddDownloadRequest(pReq);
+}
+
+void CThogDlg::OnDestroy()
+{
+	m_pClientThread->m_bRunning = false;
+
+	::WaitForSingleObject(m_pClientThread->m_hThread, INFINITE);
+
+	delete m_pClientThread;
+
+	CDialogEx::OnDestroy();
+}
+
+void CThogDlg::OnOK()
+{
+	OnSend();
+}
+
+void CThogDlg::RecurseNode(const rapidjson::Value &node, CString name, int nLevel)
 {
 	CString fmt, valFmt;
 
@@ -126,7 +240,7 @@ void CJsonRapidDlg::RecurseNode(const rapidjson::Value &node, CString name, int 
 		bDisp = false;
 
 		fmt.Format("%*s[%s] = %s\r\n", nLevel * 2, "", name, valFmt);
-		m_szOutput += fmt;
+		m_payloadData += fmt;
 
 		for (rapidjson::Value::ConstMemberIterator childNode = node.MemberBegin(); childNode != node.MemberEnd(); ++childNode)
 		{
@@ -137,7 +251,7 @@ void CJsonRapidDlg::RecurseNode(const rapidjson::Value &node, CString name, int 
 		valFmt.Format("Array");
 
 		fmt.Format("%*s[%s] = %s\r\n", nLevel * 2, "", name, valFmt);
-		m_szOutput += fmt;
+		m_payloadData += fmt;
 
 		bDisp = false;
 
@@ -163,11 +277,11 @@ void CJsonRapidDlg::RecurseNode(const rapidjson::Value &node, CString name, int 
 	if (bDisp)
 	{
 		fmt.Format("%*s[%s] = %s\r\n", nLevel * 2, "", name, valFmt);
-		m_szOutput += fmt;
+		m_payloadData += fmt;
 	}
 }
 
-void CJsonRapidDlg::OnCreateJSON(void)
+void CThogDlg::CreateJSON(void)
 {
 	rapidjson::Document document;
 	document.SetObject();
@@ -199,7 +313,7 @@ void CJsonRapidDlg::OnCreateJSON(void)
 	rapidjson::Value valUserArray(rapidjson::Type::kArrayType);
 
 	rapidjson::Value valUsers(rapidjson::Type::kObjectType);
-	
+
 	// Search users and create JSON format string
 	for (int iUser = 0; iUser < nUsers; iUser++)
 	{
@@ -228,7 +342,12 @@ void CJsonRapidDlg::OnCreateJSON(void)
 
 	document.Accept(writer);
 
-	m_szOutput = strbuf.GetString();
+	m_payloadData = strbuf.GetString();
 
 	UpdateData(FALSE);
+}
+
+void CThogDlg::OnChangeRequest()
+{
+	CreateJSON();
 }
