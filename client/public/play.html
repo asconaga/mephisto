@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        :root {
+            --main-pixel-size: 600px;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            font-family: "Lucida Console", "Courier New", monospace;
+        }
+
+        .main {
+            position: relative;
+            height: 600px;
+            width: 300px;
+            background-color: pink;
+            border-radius: 0.5em;
+            margin: 8em auto 2em;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .main:hover {
+            background-color: lightpink;
+        }
+
+        .main h2 {
+            color: teal;
+            text-align: center;
+        }
+
+        .flexie {
+            display: flex;
+        }
+
+        #myBut {
+            margin: 0 150px;
+        }
+
+        #section2 {
+            animation-timing-function: linear;
+            animation-name: example;
+            animation-iteration-count: infinite;
+            animation-duration: 1s;
+            animation-fill-mode: none;
+            height: 900px;
+            background: lightblue;
+            position: relative;
+        }
+
+        @keyframes example {
+            from {
+                top: -700px;
+            }
+
+            to {
+                top: 0px;
+            }
+        }
+
+        .container {
+            height: 200px;
+            width: 100px;
+            /* border-style: solid; */
+            overflow: hidden;
+        }
+
+        .square {
+            height: 100px;
+            width: 100px;
+            position: relative;
+            overflow: hidden;
+            /* display: inline-block; */
+        }
+
+        .square p {
+            text-align: center;
+            padding: 25px 0;
+        }
+
+        .square::before {
+            content: "";
+            width: 75%;
+            padding-bottom: 75%;
+            position: absolute;
+            z-index: 2;
+            transform: translate(-25%, -25%);
+            border: solid 60px darkblue;
+            border-radius: 50%;
+        }
+
+        .ribbon {
+            position: absolute;
+            transform-origin: bottom right;
+            user-select: none;
+            transform: translateY(-100%) rotate(90deg) translateX(70.71067811865476%) rotate(-45deg);
+            /* top: 0;
+            right: 0; */
+
+            inset: 0 0 auto auto;
+            padding: 0 2em;
+            background: teal;
+
+            color: white;
+            text-align: center;
+        }
+
+        /* flip card */
+
+        .flip-card {
+            background-color: transparent;
+            width: 260px;
+            height: 200px;
+            perspective: 1000px;
+            margin: 2em auto 2em;
+        }
+
+        .flip-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 3s;
+            transform-style: preserve-3d;
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+            border-radius: 3rem;
+        }
+
+        .flip-card-front,
+        .flip-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: inherit;
+            /* -webkit-backface-visibility: hidden; */
+            backface-visibility: hidden;
+        }
+
+        .flip-card-front {
+            background-color: white;
+            color: black;
+        }
+
+        .flip-card-back {
+            background-color: #2980b9;
+            color: white;
+            transform: rotateY(180deg);
+        }
+
+        .flip-card:hover .flip-card-inner {
+            transform: rotateY(180deg);
+        }
+    </style>
+
+    <script>
+        function myFunction() {
+            const elem = document.getElementById("section2");
+
+            elem.style.animationPlayState = (elem.style.animationPlayState != "paused") ? "paused" : "running";
+
+            // elem.style.display = 'none';
+            // elem.style.animationDuration = '3s';
+            // elem.style.animationIterationCount = 1;
+            console.log(elem);
+        }
+
+        function loadFunc() {
+
+            let chars = "+-*/[]{}+"
+            const elem = document.getElementById("section2");
+
+            for (let index = 0; index < 9; index++) {
+                let divElem = document.createElement('div');
+                divElem.className = "square";
+
+                const para = document.createElement("p");
+                para.innerText = `${chars[index]}`;
+                divElem.appendChild(para);
+
+                elem.appendChild(divElem);
+            }
+        };
+    </script>
+
+</head>
+
+<body onload="loadFunc()">
+
+    <h1>CSS Playground</h1>
+
+    <div class="flexie">
+        <div class="main" id="section1">
+            <h2>Section 1</h2>
+
+            <div class="ribbon">Rotated ribbon</div>
+            <div class="container">
+                <div id="section2">
+
+                </div>
+            </div>
+
+            <button id="myBut" type="button" onclick="myFunction()">Try it</button>
+        </div>
+
+        <div class="main" id="section1">
+            <div class="flip-card">
+                <div class="flip-card-inner">
+                    <div class="flip-card-front">
+                        <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/4.png"
+                            alt="Avatar" style="width:260px;height:200px;">
+                    </div>
+                    <div class="flip-card-back">
+                        <h1>John Doe</h1>
+                        <p>Architect & Engineer</p>
+                        <p>We love that guy</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</body>
+
+</html>
