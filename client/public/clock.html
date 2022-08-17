@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --main-pixel-size: 600px;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        .clock {
+            position: relative;
+            height: 400px;
+            width: 400px;
+            box-shadow: 10px 10px 10px 1px rgba(0, 0, 0, 0.5) inset;
+            border-radius: 50%;
+            background-image: white;
+            border: 10px solid black;
+            margin: 0 auto;
+            font-family: 'Libre Baskerville', serif;
+            font-size: 60px;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        .container {}
+
+        .digit {
+            position: absolute;
+            /* border: 1px solid black; */
+            top: 10px;
+            width: 60px;
+            height: 194px;
+            left: 174px;
+            transform-origin: 50% 100%;
+        }
+
+        .num {
+            transform-origin: 50% 50%;
+            text-align: center;
+            margin: 0;
+            user-select: none;
+        }
+    </style>
+
+    <script>
+        function myFunction() {
+            const elem = document.getElementById("section2");
+
+            elem.style.animationPlayState = (elem.style.animationPlayState != "paused") ? "paused" : "running";
+
+            // elem.style.display = 'none';
+            // elem.style.animationDuration = '3s';
+            // elem.style.animationIterationCount = 1;
+            console.log(elem);
+        }
+
+        function loadFunc() {
+            const elem = document.getElementById("clock");
+
+            for (let index = 1; index <= 12; index++) {
+                let divElem = document.createElement('div');
+                divElem.className = "digit";
+                divElem.style.transform = "rotate(" + index * 30 + "deg)";
+
+                const para = document.createElement("p");
+                para.style.transform = "rotate(" + index * -30 + "deg)";
+                para.className = "num";
+                para.innerText = `${index}`;
+                divElem.appendChild(para);
+
+                elem.appendChild(divElem);
+            }
+        };
+
+        window.addEventListener('load', loadFunc);
+    </script>
+
+</head>
+
+<body">
+    <h1>Clock</h1>
+    <div class="container">
+        <div id="clock" class="clock">
+            <div class="digit" id="1">
+                <p class="num">12</p>
+            </div>
+        </div>
+    </div>
+    </body>
+
+</html>
