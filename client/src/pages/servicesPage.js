@@ -1,5 +1,5 @@
 import { Carousel, Col, message, Row } from 'antd';
-import React, { Component, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FaCheckCircle, FaFrown } from 'react-icons/fa';
 
 const ServicesPage = () => {
@@ -66,8 +66,6 @@ const ServicesSelection = () => {
         </div>
     );
 };
-
-
 
 const getContent = (serviceArr, carouselState, setCarouselState) => {
     let retVal = [];
