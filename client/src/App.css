@@ -79,8 +79,17 @@ a:hover {
   height: 33px;
 }
 
-.finger {
-  padding: 20px 20px 20px 20px;
+.innerHome {
+  margin: 0px 0px 50px 0px;
+}
+
+.innerHome h3 {
+  margin: auto;
+  text-align: center;
+}
+
+.ant-carousel .slick-slide img {
+  margin: auto;
 }
 
 .ant-menu {
@@ -128,6 +137,10 @@ a:hover {
 
 .slick-dots li button {
   background: var(--primary-color)!important;
+}
+
+.ant-carousel .slick-dots li {
+      text-indent: 0px;
 }
 
 body {
