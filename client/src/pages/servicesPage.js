@@ -16,8 +16,11 @@ const ServicesSelection = () => {
     const [fetchItems, setFetchItems] = useState(null);
     const [carouselState, setCarouselState] = useState({ service: 0, method: 0 });
 
-    const info = (msg) => {
-        message.success(msg);
+    const info = (msg, status) => {
+        if (status)
+            message.success(msg);
+        else
+            message.error(msg);
     };
 
     useEffect(() => {
@@ -33,7 +36,10 @@ const ServicesSelection = () => {
 
                 const szServiceMsm = "Service" + ((nServices !== 1) ? "s" : "");
 
-                info(`${nServices} ${szServiceMsm} successfully fetched`);
+                info(`${nServices} ${szServiceMsm} successfully fetched`, true);
+            }
+            else {
+                info("Cannot communicate with server", false);
             }
         }
 
@@ -52,7 +58,7 @@ const ServicesSelection = () => {
         };
 
         (async () => await doFetchItems())();
-    }, []);
+    }, [API_URL]);
 
     return (
         <div className="block servicesBlock">

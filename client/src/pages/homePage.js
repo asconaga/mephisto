@@ -5,7 +5,7 @@ import React, { Component } from 'react';
 const HomePage = () => {
     return (
         <main className="Home">
-            <div className="block servicesBlock">
+            <div className="block">
                 <div className="titleHolder">
                     <h2>Home</h2>
                     <p style={{ marginTop: "1rem" }}>This is the home of the app.</p>

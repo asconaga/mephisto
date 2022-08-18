@@ -9,7 +9,6 @@ import ServicesPage from '../pages/servicesPage';
 const { Content } = Layout;
 
 const AppContent = () => {
-
     const PostPage = () => {
         const { id } = useParams();
 
@@ -24,8 +23,12 @@ const AppContent = () => {
     const AboutPage = () => {
         return (
             <main className="About">
-                <h2>About</h2>
-                <p style={{ marginTop: "1rem" }}>This blog app is a project in the Learn React tutorial series.</p>
+                <div className="block">
+                    <div className="titleHolder">
+                        <h2>About</h2>
+                        <p style={{ marginTop: "1rem" }}>Information about the Mephisto MAL client and lijidea the power behind it</p>
+                    </div>
+                </div>
             </main>
         );
     };
