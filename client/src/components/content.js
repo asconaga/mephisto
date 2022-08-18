@@ -5,20 +5,11 @@ import { Route, Routes, useParams } from 'react-router-dom';
 import HomePage from '../pages/homePage';
 import MissingPage from '../pages/missingPage';
 import ServicesPage from '../pages/servicesPage';
+import TestPage from '../pages/testPage';
 
 const { Content } = Layout;
 
 const AppContent = () => {
-    const PostPage = () => {
-        const { id } = useParams();
-
-        return (
-            <main className="PostPage">
-                <h2>Post {id}</h2>
-                <p style={{ marginTop: "1rem" }}>This blog app is a project in the Learn React tutorial series.</p>
-            </main>
-        );
-    };
 
     const AboutPage = () => {
         return (
@@ -40,7 +31,7 @@ const AppContent = () => {
                     <Route path="/" element={<HomePage />} />
                     <Route path="/services" element={<ServicesPage />} />
                     <Route path="/about" element={<AboutPage />} />
-                    <Route path="/post/:id" element={<PostPage />} />
+                    <Route path="/test" element={<TestPage />} />
                     <Route path="*" element={<MissingPage />} />
                 </Routes>
             </div>

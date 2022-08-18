@@ -1,7 +1,8 @@
 import React from 'react';
 import { Layout, Menu } from 'antd';
-import { FaBabyCarriage, FaCogs, FaCommentAlt, FaMagento, FaMandalorian } from 'react-icons/fa';
+import { FaBabyCarriage, FaCogs, FaMagento, FaMandalorian } from 'react-icons/fa';
 import { AiFillHome, AiFillInfoCircle } from 'react-icons/ai';
+import { GiHypodermicTest, GiTestTubes } from 'react-icons/gi';
 import { Link } from 'react-router-dom';
 
 const { Sider } = Layout;
@@ -22,7 +23,7 @@ const AppSidebar = () => {
         getItem('Home', '/', <AiFillHome />),
         getItem('About', '/about', <AiFillInfoCircle />),
         getItem('Services', '/services', <FaCogs />),
-        getItem('Post 2', '/post/2', <FaCommentAlt />),
+        getItem('Test', '/test', <GiHypodermicTest />),
         getItem('404', '/crinky', <FaMagento />),
         getItem('Mando', null, <FaMandalorian />, [
             getItem('Option 5'),
