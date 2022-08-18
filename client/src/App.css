@@ -172,10 +172,11 @@ body {
 
 .logo a {
   color: var(--back-color);
+  transition: 0.5s;
 }
 
 .logo a:hover {
-  opacity: 0.85;
+  opacity: 0.8;
 }
 
 @keyframes spin {

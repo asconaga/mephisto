@@ -1,0 +1,31 @@
+# Prerequisites
+*.d
+
+# Compiled Object files
+*.o
+*.obj
+
+# resource files
+*.res
+
+# Precompiled Headers and browser files
+*.pch
+*.suo
+*.db
+
+# Compiled Dynamic libraries
+*.so
+*.dll
+
+# Build files
+*.pdb
+*.ilk
+*.idb
+*.tlog
+*.log
+
+# Compiled Static libraries
+*.lib
+
+# Executables
+*.exe
