@@ -1,4 +1,4 @@
-@import 'antd/dist/antd.dark.css';
+@import 'antd.css';
 
 /* @import 'antd/dist/antd.min.css'; */
 
@@ -95,52 +95,10 @@ a:hover {
 .ant-menu {
   background-image: linear-gradient(to bottom, black, var(--back-color))
 }
-.ant-menu-submenu:hover, .ant-menu-item-selected, .ant-menu-item-active svg {
-  color: var(--back-color);
-}
 
-.ant-menu-item-active:hover, .ant-menu-item-selected a,  .ant-menu-item:hover, .ant-menu-item a:hover {
-  color: var(--back-color);
-}
-
-.ant-menu-vertical .ant-menu-submenu-selected, .ant-menu-vertical .ant-menu-submenu-selected:hover   {
-  color: var(--back-color);
-}
-
-.ant-menu li.ant-menu-item:hover {
-  color: var(--back-color);
-}
-
-.ant-menu li.ant-menu-item-selected
-{
-  color: var(--back-color);
-}
-
-.ant-btn-primary {
-  background-color:  var(--back-color)!important;
-  border-color: var(--back-color)!important;
-}
-
-.ant-btn-primary:hover {
-  background-color:  var(--back-color)!important;
-  opacity: .5;
-}
-
-.ant-btn:hover {
-  border-color: var(--back-color)!important;
-  color: var(--back-color)!important;
-}
-
-.slick-dots li.slick-active button {
-  background: var(--back-color)!important;
-}
-
-.slick-dots li button {
-  background: var(--primary-color)!important;
-}
-
+/* for use with home page cats*/
 .ant-carousel .slick-dots li {
-      text-indent: 0px;
+  text-indent: 0px;
 }
 
 body {
@@ -348,4 +306,23 @@ body {
 
 .servicesBlock .innerContent svg {
   font-size: 44px;  
+}
+
+/* --- testPage --- */
+
+.mainTest {
+  /* height: 100%; */
+  display: flex;
+  align-items: stretch;
+  justify-content: space-between;
+}
+
+.contentor {
+  text-align: left;
+  margin: 0px;
+  padding: 20px;
+  width: 30%;
+  background-color: #181818;
+	box-shadow: 2px 2px 3px #999;
+  border-radius: 20px;
 }

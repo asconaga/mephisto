@@ -64,7 +64,7 @@ const ServicesSelection = () => {
         <div className="block servicesBlock">
             <div className="container-fluid">
                 <div className="titleHolder">
-                    <h2>Services </h2>
+                    <h2>Services Page</h2>
                     <p>Information on the services available along with their associated methods and associated posts are available below.</p>
                 </div>
                 {getContent(fetchItems, carouselState, setCarouselState)}

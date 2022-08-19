@@ -7,7 +7,7 @@ const HomePage = () => {
         <main className="Home">
             <div className="block">
                 <div className="titleHolder">
-                    <h2>Home</h2>
+                    <h2>Home Page</h2>
                     <p style={{ marginTop: "1rem" }}>This is the home of the app.</p>
                 </div>
                 <CarouselComponent />

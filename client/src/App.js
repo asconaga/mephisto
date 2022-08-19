@@ -10,8 +10,6 @@ import AppFooter from './components/footer';
 import AppFloater from './components/floater';
 import AppContent from './components/content';
 
-const { Content } = Layout;
-
 function App() {
     return (
         <div className="App">
