@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Layout } from 'antd';
 import './App.css';
 
@@ -11,11 +11,23 @@ import AppFloater from './components/floater';
 import AppContent from './components/content';
 
 function App() {
+
+    const storedTheme = localStorage.getItem('malTheme') || 'light';
+
+    const [appTheme, setAppTheme] = useState(storedTheme);
+
+    useEffect(() => {
+
+        localStorage.setItem('malTheme', appTheme);
+    }, [appTheme]);
+
+
+
     return (
-        <div className="App">
+        <div className="App" data-theme={appTheme}>
             <BrowserRouter>
                 <Layout style={{ minHeight: '100vh' }}>
-                    <AppHeader />
+                    <AppHeader appTheme={appTheme} setAppTheme={setAppTheme} />
                     <Layout className="innerLayout">
                         <AppSidebar />
                         <AppContent />
