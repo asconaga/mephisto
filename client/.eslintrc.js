@@ -23,8 +23,8 @@ module.exports = {
     },
     plugins: ["react", "react-hooks"],
     rules: {
-        indent: ["error", 4],
         semi: ["error", "always"],
+        indent: [2, 4, { "SwitchCase": 1 }],
         "object-curly-spacing": ["error", "always"],
         "no-unused-vars": "off",
         "space-in-parens": ["error", "never"],

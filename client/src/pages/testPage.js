@@ -2,6 +2,7 @@ import { AutoComplete, Button, Checkbox, Col, Form, Input, Row, Select } from 'a
 import TextArea from 'antd/lib/input/TextArea';
 import PropTypes from 'prop-types';
 import React, { useEffect, useRef, useState } from 'react';
+import JSONParser from '../components/jsonparser';
 
 const AppPayload = ({ payloadDisabled }) => {
 
@@ -19,8 +20,16 @@ AppPayload.propTypes = {
 };
 
 const TestPage = () => {
+
+    let todos =
+        { "admin": { "user": [{ "email": "asconaga@gmail.com", "key": "dff7ef8d-f7cb-447e-a4c8-45e549345321" }, { "email": "kennywoof@gmail.com", "key": "0ce92734-0068-466b-abf9-42999a241082" }, { "email": "jack@gmail.com", "key": "c29bdb39-8194-44a2-ab60-baa8a837bd84" }] } };
+
+    todos =
+        { "services": { "service": [{ "name": "custard" }, { "name": "sarIncident" }, { "name": "jill" }, { "name": "jack" }] } };
+
     const [form] = Form.useForm();
     const [payloadDisabled, setPayloadDisabled] = useState(true);
+    const [resultsData, setResultsData] = useState(todos);
 
     const methodOptions = [
         { value: 'api/services', },
@@ -59,7 +68,7 @@ const TestPage = () => {
             retVal.status = response.status;
 
             if (retVal.status !== 404) {
-                const resObj = await response.text(); // could be json()
+                const resObj = await response.json();
 
                 retVal.result = resObj;
             }
@@ -73,6 +82,8 @@ const TestPage = () => {
         } finally {
             // retVal.result = "we in a finally dude";
         }
+
+        setResultsData(retVal.result);
 
         form.setFieldsValue(retVal);
     };
@@ -151,9 +162,8 @@ const TestPage = () => {
                                     <Input />
                                 </Form.Item>
 
-
                                 <Form.Item name="result" label="Result">
-                                    <TextArea rows={16} />
+                                    <JSONParser json={resultsData} />
                                 </Form.Item>
                             </div>
                         </div>

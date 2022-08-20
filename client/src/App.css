@@ -342,3 +342,54 @@ body {
 	box-shadow: 2px 2px 3px #999;
   border-radius: 20px;
 }
+  /* jsonparser */
+
+  .json-parser {
+    font-size: small;
+    text-align: left;
+    display: block;
+    font-size: 0.9em;
+    line-height: 1.3;
+    font-weight: 700;
+    font-family: Menlo, monospace;
+    color: #222;
+    border-style: solid;
+    border-width: thin;
+    background-color: var(--input-color);
+    color: var(--text-color);
+    min-height: 300px;
+    max-height: 300px;
+    overflow:scroll;
+   }
+
+   .json-line {
+    display: inline-block;
+   }
+ 
+  .json-maintext {
+    display:inline-block;
+    cursor:default;
+  }
+
+  .json-drop
+  {
+    display:inline-block;
+    user-select: none;
+  }
+
+  .json-title {
+    color: purple;
+  }
+  
+  .json-string {
+    color: red;
+  }
+
+  .json-number, .json-boolean {
+    color: blue;
+  }
+
+  .json-type {
+    font-style: italic;
+  }
+  
