@@ -136,7 +136,7 @@ sup {
   top: -0.5em;
 }
 a {
-  color: var(--back1-color);
+  color: var(--header-color);
   text-decoration: none;
   background-color: transparent;
   outline: none;
@@ -145,7 +145,7 @@ a {
   -webkit-text-decoration-skip: objects;
 }
 a:hover {
-  color: var(--back2-color);
+  opacity: 0.5;
 }
 a:active {
   color: var(--back3-color);
@@ -2121,7 +2121,7 @@ html {
   padding-right: 18px;
 }
 .ant-select-single.ant-select-open .ant-select-selection-item {
-  color: rgba(255, 255, 255, 0.3);
+  color: var(--subtitle-color);
 }
 .ant-select-single:not(.ant-select-customize-input) .ant-select-selector {
   width: 100%;
@@ -2436,7 +2436,7 @@ html {
 }
 .ant-select:not(.ant-select-customize-input) .ant-select-selector {
   position: relative;
-  background-color: transparent;
+  background-color: var(--input-color);
   border: 1px solid #434343;
   border-radius: 2px;
   transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
@@ -2470,7 +2470,7 @@ html {
 .ant-select:not(.ant-select-customize-input) .ant-select-selector .ant-select-selection-search-input {
   margin: 0;
   padding: 0;
-  background: transparent;
+  background: var(--input-color);
   border: none;
   outline: none;
   -webkit-appearance: none;
@@ -2530,7 +2530,7 @@ html {
   align-items: center;
   height: 12px;
   margin-top: -6px;
-  color: rgba(255, 255, 255, 0.3);
+  color: var(--text-color);
   font-size: 12px;
   line-height: 1;
   text-align: center;
@@ -2612,7 +2612,7 @@ html {
   overflow: hidden;
   font-size: 14px;
   font-variant: initial;
-  background-color: var(--menu-color);
+  background-color: var(--theme-color);
   border-radius: 2px;
   outline: none;
   box-shadow: 0 3px 6px -4px rgba(0, 0, 0, 0.48), 0 6px 16px 0 rgba(0, 0, 0, 0.32), 0 9px 28px 8px rgba(0, 0, 0, 0.2);
@@ -2657,7 +2657,7 @@ html {
   display: block;
   min-height: 32px;
   padding: 5px 12px;
-  color: rgba(255, 255, 255, 0.85);
+  color: var(--text-color);
   font-weight: normal;
   font-size: 14px;
   line-height: 22px;
@@ -2682,12 +2682,12 @@ html {
   flex: none;
 }
 .ant-select-item-option-active:not(.ant-select-item-option-disabled) {
-  background-color: rgba(255, 255, 255, 0.08);
+  background-color: var(--menufade-color);
 }
 .ant-select-item-option-selected:not(.ant-select-item-option-disabled) {
-  color: rgba(255, 255, 255, 0.85);
+  color: var(--text-color);
   font-weight: 600;
-  background-color: #111b26;
+  background-color: var(--menuselect-color);
 }
 .ant-select-item-option-selected:not(.ant-select-item-option-disabled) .ant-select-item-option-state {
   color: var(--back1-color);
@@ -3022,7 +3022,7 @@ html {
   padding-right: 15.3137085px;
 }
 .ant-popover-inner {
-  background-color: var(--dialog-color);
+  background-color: var(--theme-color);
   background-clip: padding-box;
   border-radius: 2px;
   box-shadow: 0 3px 6px -4px rgba(0, 0, 0, 0.48), 0 6px 16px 0 rgba(0, 0, 0, 0.32), 0 9px 28px 8px rgba(0, 0, 0, 0.2);
@@ -3081,7 +3081,7 @@ html {
   pointer-events: none;
 }
 .ant-popover-arrow-content {
-  --antd-arrow-background-color: var(--dialog-color);
+  --antd-arrow-background-color: var(--theme-color);
   position: absolute;
   top: 0;
   right: 0;
@@ -4110,7 +4110,7 @@ li:last-child > .ant-breadcrumb-separator {
   padding: 4px 0;
   text-align: left;
   list-style-type: none;
-  background-color: var(--menu-color);
+  background-color: var(--theme-color);
   background-clip: padding-box;
   border-radius: 2px;
   outline: none;
@@ -4463,9 +4463,9 @@ li:last-child > .ant-breadcrumb-separator {
 }
 .ant-btn:hover,
 .ant-btn:focus {
-  color: var(--back2-color);
-  border-color: var(--back2-color);
-  background: transparent;
+  color: var(--back-color);
+  border-color: var(--back4-color);
+  background: var(--back4-color);
 }
 .ant-btn:hover > a:only-child,
 .ant-btn:focus > a:only-child {
@@ -4482,9 +4482,9 @@ li:last-child > .ant-breadcrumb-separator {
   content: '';
 }
 .ant-btn:active {
-  color: var(--back3-color);
-  border-color: var(--back3-color);
-  background: transparent;
+  color: var(--back-color);
+  border-color: var(--back4-color);
+  background: var(--back4-color);
 }
 .ant-btn:active > a:only-child {
   color: currentcolor;
@@ -4530,7 +4530,6 @@ li:last-child > .ant-breadcrumb-separator {
 .ant-btn:focus,
 .ant-btn:active {
   text-decoration: none;
-  background: transparent;
 }
 .ant-btn > span {
   display: inline-block;
@@ -21729,7 +21728,7 @@ textarea.ant-mentions {
 }
 .ant-modal-content {
   position: relative;
-  background-color: var(--dialog-color);
+  background-color: var(--theme-color);
   background-clip: padding-box;
   border: 0;
   border-radius: 2px;
@@ -21771,7 +21770,7 @@ textarea.ant-mentions {
 .ant-modal-header {
   padding: 16px 24px;
   color: var(--text-color);
-  background: var(--dialog-color);
+  background: var(--header-color);
   border-bottom: 1px solid #303030;
   border-radius: 2px 2px 0 0;
 }

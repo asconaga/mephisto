@@ -36,12 +36,14 @@
   --content-color: #181818; 
   --menu-color: #1f1f1f;  
   --dialog-color: #1f1f1f;
-  --input-color: teal;
+  --input-color: transparent;
+  --menuselect-color: rgba(255,255,255, 0.51);
+  --menufade-color: rgba(255,255,255, 0.31);
 }
 
 @import 'antd.css';
 
-/* @import 'antd/dist/antd.min.css'; */
+/* @import 'antd/dist/antd.css'; */
 
 @import url('https://fonts.googleapis.com/css?family=Oleo+Script+Swash+Caps&display=swap');
 

@@ -11,7 +11,6 @@ import AppFloater from './components/floater';
 import AppContent from './components/content';
 
 function App() {
-
     const storedTheme = localStorage.getItem('malTheme') || 'light';
 
     const [appTheme, setAppTheme] = useState(storedTheme);
@@ -20,8 +19,6 @@ function App() {
 
         localStorage.setItem('malTheme', appTheme);
     }, [appTheme]);
-
-
 
     return (
         <div className="App" data-theme={appTheme}>
