@@ -11667,7 +11667,7 @@ span.ant-radio + * {
 }
 .ant-col-8 {
   display: block;
-  /* flex: 0 0 33.33333333%; */
+  flex: 0 0 15%;
   max-width: 33.33333333%;
 }
 .ant-col-push-8 {

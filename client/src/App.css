@@ -345,14 +345,12 @@ body {
   /* jsonparser */
 
   .json-parser {
-    font-size: small;
     text-align: left;
     display: block;
     font-size: 0.9em;
     line-height: 1.3;
     font-weight: 700;
     font-family: Menlo, monospace;
-    color: #222;
     border-style: solid;
     border-width: thin;
     background-color: var(--input-color);
@@ -362,18 +360,26 @@ body {
     overflow:scroll;
    }
 
+   .json-block {
+    border-style: solid;
+    border-width: thin;
+    border-right: none;
+    padding-left: 20px;
+   }
+
    .json-line {
-    display: inline-block;
+    /* inline block when we remove the depth nums*/
+     display:inline-block;
    }
  
   .json-maintext {
-    display:inline-block;
+    /* display:inline-block; */
     cursor:default;
   }
 
   .json-drop
   {
-    display:inline-block;
+    /* display:inline-block; */
     user-select: none;
   }
 

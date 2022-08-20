@@ -5,34 +5,7 @@ const JSONParser = ({ json }) => {
 
     class TestReader {
         m_definitions = null;
-
-        navigateTree = (jsonObj, nDepth) => {
-            for (let key in jsonObj) {
-                const newObj = jsonObj[key];
-
-                let objType = typeof newObj;
-
-                let bIsObj = false;
-
-                if (objType === 'object') {
-
-                    bIsObj = true;
-                    if (Array.isArray(newObj)) {
-                        objType = 'array';
-                    }
-
-                    let newDef = { type: objType, title: key, depth: nDepth };
-                    this.m_definitions.push(newDef);
-
-                    if (bIsObj) {
-                        this.navigateTree(jsonObj[key], nDepth + 1);
-                    }
-                }
-                else {
-                    this.m_definitions.push({ title: key, type: objType, value: newObj, depth: nDepth });
-                }
-            }
-        };
+        m_lastDepth = -1;
 
         navigateSchemaTree = (jsonObj, rootObj) => {
             for (let key in jsonObj) {
@@ -84,15 +57,43 @@ const JSONParser = ({ json }) => {
             console.log(JSON.stringify(rootObj, null, '  '));
         };
 
+        navigateTree = (jsonObj, nDepth) => {
+            for (let key in jsonObj) {
+                const newObj = jsonObj[key];
+
+                let objType = typeof newObj;
+
+                let bIsObj = false;
+
+                if (objType === 'object') {
+
+                    bIsObj = true;
+                    if (Array.isArray(newObj)) {
+                        objType = 'array';
+                    }
+
+                    let newDef = { type: objType, title: key, depth: nDepth };
+                    this.m_definitions.push(newDef);
+
+                    if (bIsObj) {
+                        this.navigateTree(jsonObj[key], nDepth + 1);
+                    }
+                }
+                else {
+                    this.m_definitions.push({ title: key, type: objType, value: newObj, depth: nDepth });
+                }
+            }
+        };
+
         generateTree = (data) => {
             this.m_definitions = [];
 
             this.navigateTree(data, 0);
-            console.log(JSON.stringify(this.m_definitions, null, '  '));
+
+            this.m_lastDepth = -1;
         };
 
         generateValue = (user) => {
-
             let value = "Undefined";
             let thisClass = 'json-' + user.type;
 
@@ -111,29 +112,88 @@ const JSONParser = ({ json }) => {
             return <span className={thisClass}>{value}</span>;
         };
 
+        generateOut = (user) => {
+
+            let ret = <div>{user.title}</div>;
+
+            return ret;
+
+        };
+
+
+        navigateHTML = (jsonObj, nDepth) => {
+            let retVal = [];
+
+            for (let key in jsonObj) {
+                const newObj = jsonObj[key];
+
+                let objType = typeof newObj;
+
+                let bIsObj = false;
+
+                if (objType === 'object') {
+
+                    bIsObj = true;
+                    if (Array.isArray(newObj)) {
+                        objType = 'array';
+                    }
+
+                    let newDef = { type: objType, title: key, depth: nDepth };
+                    retVal.push(<div>{key}-{objType}</div>);
+
+                    if (bIsObj) {
+                        let ret = <div className='json-block'> {
+                            this.navigateHTML(jsonObj[key], nDepth + 1)
+                        } </div>;
+                        retVal.push(ret);
+                    }
+                }
+                else {
+                    ///this.m_definitions.push({ title: key, type: objType, value: newObj, depth: nDepth });
+                    retVal.push(<div>{key}-{newObj}</div>);
+                }
+            }
+
+            return retVal;
+        };
+
+        generateHTML = (json) => {
+            let ret = <div className='json-block'> {
+                this.navigateHTML(json, 0)
+            } </div>;
+
+            return ret;
+        };
+
         generateLine = (user) => {
+            console.log(this.m_lastDepth, user.depth);
+
             let divStyle = { paddingLeft: user.depth * 16 + "px" };
+            let extra = "";
+
+            this.m_lastDepth = user.depth;
 
             let divDrop = '';
             let divObj = '';
 
             if (user.value === undefined) {
-                divDrop = '▼-';
+                // divDrop = '▼-';
+
+                divDrop = `${user.depth}-`;
                 divObj = <span className="json-type">({user.type})</span>;
             }
             else {
                 divDrop = '--';
             }
+            //style={divStyle}
 
             let divMain =
-                <div style={divStyle} className="json-line">
-                    <div className='json-drop'>{divDrop}</div>
-                    <div className="json-maintext">
-                        <span className="json-title">{user.title}:</span> {this.generateValue(user)} {divObj}
-                    </div>
+                <div className="json-line">
+                    <span className='json-drop'>{divDrop}</span>
+                    <span className="json-title">{user.title}:</span> {this.generateValue(user)} {divObj}
                 </div>;
 
-            let divRet = <div>{user.depth}{'|'}{divMain}</div>;
+            let divRet = <div>{divMain}</div>;
 
             return divRet;
         };
@@ -144,9 +204,7 @@ const JSONParser = ({ json }) => {
 
     return (
         <div className='json-parser'>
-            {newTester.m_definitions.map((user) => (
-                newTester.generateLine(user)
-            ))}
+            {newTester.generateHTML(json)}
         </div>
     );
 };
