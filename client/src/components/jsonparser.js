@@ -5,7 +5,6 @@ const JSONParser = ({ json }) => {
 
     class TestReader {
         m_definitions = null;
-        m_lastDepth = -1;
 
         navigateSchemaTree = (jsonObj, rootObj) => {
             for (let key in jsonObj) {
@@ -89,8 +88,6 @@ const JSONParser = ({ json }) => {
             this.m_definitions = [];
 
             this.navigateTree(data, 0);
-
-            this.m_lastDepth = -1;
         };
 
         generateValue = (user) => {
@@ -117,9 +114,7 @@ const JSONParser = ({ json }) => {
             let ret = <div>{user.title}</div>;
 
             return ret;
-
         };
-
 
         navigateHTML = (jsonObj, nDepth) => {
             let retVal = [];
@@ -138,8 +133,8 @@ const JSONParser = ({ json }) => {
                         objType = 'array';
                     }
 
-                    let newDef = { type: objType, title: key, depth: nDepth };
-                    retVal.push(<div>{key}-{objType}</div>);
+                    let objData = { type: objType, title: key };
+                    retVal.push(this.generateLine(objData));
 
                     if (bIsObj) {
                         let ret = <div className='json-block'> {
@@ -149,8 +144,8 @@ const JSONParser = ({ json }) => {
                     }
                 }
                 else {
-                    ///this.m_definitions.push({ title: key, type: objType, value: newObj, depth: nDepth });
-                    retVal.push(<div>{key}-{newObj}</div>);
+                    let objData = { title: key, type: objType, value: newObj };
+                    retVal.push(this.generateLine(objData));
                 }
             }
 
@@ -166,26 +161,14 @@ const JSONParser = ({ json }) => {
         };
 
         generateLine = (user) => {
-            console.log(this.m_lastDepth, user.depth);
-
-            let divStyle = { paddingLeft: user.depth * 16 + "px" };
-            let extra = "";
-
-            this.m_lastDepth = user.depth;
-
             let divDrop = '';
             let divObj = '';
 
             if (user.value === undefined) {
-                // divDrop = '▼-';
+                divDrop = '▼ ';
 
-                divDrop = `${user.depth}-`;
                 divObj = <span className="json-type">({user.type})</span>;
             }
-            else {
-                divDrop = '--';
-            }
-            //style={divStyle}
 
             let divMain =
                 <div className="json-line">

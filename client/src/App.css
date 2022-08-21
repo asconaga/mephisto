@@ -357,34 +357,31 @@ body {
     color: var(--text-color);
     min-height: 300px;
     max-height: 300px;
-    overflow:scroll;
+    overflow-y:scroll;
    }
 
    .json-block {
-    border-style: solid;
+    /* border-style: solid; */
     border-width: thin;
     border-right: none;
     padding-left: 20px;
    }
 
    .json-line {
-    /* inline block when we remove the depth nums*/
      display:inline-block;
    }
  
   .json-maintext {
-    /* display:inline-block; */
     cursor:default;
   }
 
   .json-drop
   {
-    /* display:inline-block; */
     user-select: none;
   }
 
   .json-title {
-    color: purple;
+    color: var(--theme-color);
   }
   
   .json-string {

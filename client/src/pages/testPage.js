@@ -1,7 +1,7 @@
-import { AutoComplete, Button, Checkbox, Col, Form, Input, Row, Select } from 'antd';
+import { AutoComplete, Button, Form, InputNumber, Select } from 'antd';
 import TextArea from 'antd/lib/input/TextArea';
 import PropTypes from 'prop-types';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import JSONParser from '../components/jsonparser';
 
 const AppPayload = ({ payloadDisabled }) => {
@@ -21,45 +21,39 @@ AppPayload.propTypes = {
 
 const TestPage = () => {
 
-    let todos =
-        { "admin": { "user": [{ "email": "asconaga@gmail.com", "key": "dff7ef8d-f7cb-447e-a4c8-45e549345321" }, { "email": "kennywoof@gmail.com", "key": "0ce92734-0068-466b-abf9-42999a241082" }, { "email": "jack@gmail.com", "key": "c29bdb39-8194-44a2-ab60-baa8a837bd84" }] } };
+    let todos = {};
 
-    todos = {
-        "incident": {
-            "id": 21012,
-            "name": "Thailand Test 1",
-            "modelId": 1,
-            "notes": "MRCC received information",
-            "userName": "Ian Smith",
-            "times": {
-                "driftStart": 1550466000,
-                "datum": 1550487600
-            },
-            "position": {
-                "lat": 12.65,
-                "lon": 100.8
-            },
-            "targets": {
-                "target": [{
-                    "id": 45871325,
-                    "name": "Alpha Bravo",
-                    "type": 7
-                },
-                {
-                    "id": 45871325,
-                    "name": "Alpha Bravo",
-                    "type": 7
-                }
+    // todos = {
+    //     "incident": {
+    //         "id": 21012,
+    //         "name": "Thailand Test 1",
+    //         "modelId": 1,
+    //         "notes": "MRCC received information",
+    //         "userName": "Ian Smith",
+    //         "times": {
+    //             "driftStart": 1550466000,
+    //             "datum": 1550487600
+    //         },
+    //         "position": {
+    //             "lat": 12.65,
+    //             "lon": 100.8
+    //         },
+    //         "targets": {
+    //             "target": [{
+    //                 "id": 45871325,
+    //                 "name": "Alpha Bravo",
+    //                 "type": 7
+    //             },
+    //             {
+    //                 "id": 45871325,
+    //                 "name": "Alpha Bravo",
+    //                 "type": 7
+    //             }
 
-                ]
-            }
-        }
-    };
-
-
-
-    // todos =
-    //     { "services": { "service": [{ "name": "custard", "description": "Information on the services available along with their associated methods and associated posts are available below" }, { "name": "sarIncident" }, { "name": "jill" }, { "name": "jack" }] } };
+    //             ]
+    //         }
+    //     }
+    // };
 
     const [form] = Form.useForm();
     const [payloadDisabled, setPayloadDisabled] = useState(true);
@@ -191,7 +185,7 @@ const TestPage = () => {
                                 <Form.Item
                                     label="Status"
                                     name="status">
-                                    <Input />
+                                    <InputNumber min={200} max={299} />
                                 </Form.Item>
 
                                 <Form.Item name="result" label="Result">
@@ -200,7 +194,6 @@ const TestPage = () => {
                             </div>
                         </div>
                     </Form>
-
                 </div>
             </div>
         </div >
