@@ -153,7 +153,7 @@ const JSONParser = ({ json }) => {
         };
 
         generateHTML = (json) => {
-            let ret = <div className='json-block'> {
+            let ret = <div> {
                 this.navigateHTML(json, 0)
             } </div>;
 

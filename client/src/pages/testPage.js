@@ -136,7 +136,6 @@ const TestPage = () => {
         <div className="testblock block">
             <div className="titleHolder">
                 <h2>Test Page</h2>
-                <p style={{ marginTop: "1rem" }}>Test the backend features of the API with this web thog client</p>
                 <div>
                     <Form
                         form={form}

@@ -65,7 +65,6 @@ const ServicesSelection = () => {
             <div className="container-fluid">
                 <div className="titleHolder">
                     <h2>Services Page</h2>
-                    <p>Information on the services available along with their associated methods and associated posts are available below.</p>
                 </div>
                 {getContent(fetchItems, carouselState, setCarouselState)}
             </div>
@@ -84,18 +83,18 @@ const getContent = (serviceArr, carouselState, setCarouselState) => {
             },
             {
                 key: '2',
-                title: 'Methods',
+                title: 'Posts',
 
             },
             {
                 key: '3',
-                title: 'Posts',
+                title: 'Methods',
             },
         ];
 
         sectionItems[0]['arr'] = serviceArr;
-        sectionItems[1]['arr'] = serviceArr[carouselState.service]?.methods;
-        sectionItems[2]['arr'] = serviceArr[carouselState.service]?.methods[carouselState.method]?.posts;
+        sectionItems[2]['arr'] = serviceArr[carouselState.service]?.methods;
+        sectionItems[1]['arr'] = serviceArr[carouselState.service]?.methods[carouselState.method]?.posts;
 
         let tmpArr = [];
 
@@ -113,6 +112,19 @@ const getContent = (serviceArr, carouselState, setCarouselState) => {
             cloneService.method = index;
 
             setCarouselState(cloneService);
+        };
+
+
+        const customPag = (i) => {
+            return <p style={{ userSelect: 'none' }}>{i + 1}</p>;
+        };
+
+        const appendDots = (dots) => {
+            return (
+                <div style={{ backgroundColor: "lightgray" }}>
+                    <ul style={{ color: "black", margin: "3px" }}> {dots} </ul>
+                </div>
+            );
         };
 
         const arrChangers = [onChangeService, onChangeMethod, null];
@@ -147,16 +159,38 @@ const getContent = (serviceArr, carouselState, setCarouselState) => {
                 );
             });
 
-            tmpArr.push(<Col md={{ span: 8 }} key={elemArr.key}>
+
+            tmpArr.push(<div key={elemArr.key}>
                 <div className="content">
                     <h2>{elemArr.title}</h2>
-                    <Carousel arrows={false} dots={true} infinite slidesToShow={1} slidesToScroll={1} swipeToSlide draggable afterChange={arrChangers[index]}>
+                    <Carousel arrows={false}
+                        dots={true}
+                        infinite
+                        slidesToShow={(tmpConArr.length >= 3) ? 3 : 1}
+                        slidesToScroll={1}
+                        swipeToSlide
+                        draggable
+                        centerMode={true}
+                        centerPadding="0px"
+                        className="center"
+                        focusOnSelect={true}
+                        responsive={[
+                            {
+                                breakpoint: 1024,
+                                settings: {
+                                    slidesToShow: 1
+                                }
+                            }]}
+                        customPaging={customPag}
+                        appendDots={appendDots}
+                        cssEase="cubic-bezier(0.600, -0.280, 0.735, 0.045)"
+                        afterChange={arrChangers[index]}>
                         {tmpConArr}
                     </Carousel>
                 </div>
-            </Col>);
+            </div >);
         }
-        retVal = <Row gutter={[16, 16]}>{tmpArr} </Row>;
+        retVal = <div>{tmpArr} </div>;
     }
 
     return retVal;

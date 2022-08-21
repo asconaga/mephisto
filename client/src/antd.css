@@ -3044,6 +3044,7 @@ html {
   color: rgba(255, 255, 255, 0.85);
   font-weight: 500;
   border-bottom: 1px solid #303030;
+  text-align: center;
 }
 .ant-popover-inner-content {
   padding: 12px 16px;
@@ -21725,6 +21726,7 @@ textarea.ant-mentions {
   font-size: 16px;
   line-height: 22px;
   word-wrap: break-word;
+  text-align: center;
 }
 .ant-modal-content {
   position: relative;
@@ -21782,7 +21784,7 @@ textarea.ant-mentions {
 }
 .ant-modal-footer {
   padding: 10px 16px;
-  text-align: right;
+  text-align: center;
   background: transparent;
   border-top: 1px solid #303030;
   border-radius: 0 0 2px 2px;

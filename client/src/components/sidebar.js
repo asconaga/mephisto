@@ -1,9 +1,9 @@
 import React from 'react';
-import { Layout, Menu } from 'antd';
-import { FaBabyCarriage, FaCogs, FaMagento, FaMandalorian } from 'react-icons/fa';
-import { AiFillHome, AiFillInfoCircle } from 'react-icons/ai';
-import { GiHypodermicTest, GiTestTubes } from 'react-icons/gi';
 import { Link } from 'react-router-dom';
+import { Layout, Menu } from 'antd';
+import { FaCogs, FaMagento, FaMandalorian } from 'react-icons/fa';
+import { AiFillHome, AiFillInfoCircle } from 'react-icons/ai';
+import { GiHypodermicTest } from 'react-icons/gi';
 
 const { Sider } = Layout;
 
@@ -26,15 +26,9 @@ const AppSidebar = () => {
         getItem('Test', '/test', <GiHypodermicTest />),
         getItem('404', '/crinky', <FaMagento />),
         getItem('Mando', null, <FaMandalorian />, [
-            getItem('Option 5'),
-            getItem('Option 6'),
-            getItem('Option 7'),
-            getItem('Option 8'),
-        ]),
-        getItem('Admin', null, <FaBabyCarriage />, [
-            getItem('Option 9'),
-            getItem('Option 10')
-        ]),
+            getItem('This is the way'),
+            getItem('I have spoken'),
+        ])
     ];
 
     let nextKey = 1;

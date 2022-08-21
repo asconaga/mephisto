@@ -56,8 +56,6 @@ const AppHeader = ({ appTheme, setAppTheme }) => {
                     <Link to='/'><GiDevilMask /> - Mephisto</Link>
                 </div>
 
-
-
                 <Dropdown overlay={menu}>
                     <div className="headerUtil flexCenter"><FaChevronDown /></div>
                 </Dropdown>

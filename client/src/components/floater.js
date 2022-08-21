@@ -30,7 +30,16 @@ const AppFloater = () => {
                 <Button onClick={showModal}><FaInfoCircle /></Button>
             </div>
 
-            <Modal title="Quck Help" visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
+            <Modal title="Quck Help" visible={isModalVisible} okText='Cancel'
+                cancelText='OK'
+                okButtonProps={{
+                    type: 'default'
+                }}
+                cancelButtonProps={{
+                    type: 'primary'
+                }}
+                onOk={handleOk}
+                onCancel={handleCancel}>
                 {content}
             </Modal>
         </div>
