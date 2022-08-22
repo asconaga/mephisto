@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { Layout, Menu } from 'antd';
 import { FaCogs, FaMagento, FaMandalorian } from 'react-icons/fa';
 import { AiFillHome, AiFillInfoCircle } from 'react-icons/ai';
@@ -37,7 +37,7 @@ const AppSidebar = () => {
         let linkVal = item.label;
 
         if (item.link) {
-            linkVal = <Link to={item.link}>{item.label}</Link>;
+            linkVal = <NavLink to={item.link}>{item.label}</NavLink>;
         }
 
         return <Menu.Item key={nextKey++} icon={item.icon}>{linkVal}</Menu.Item>;

@@ -278,8 +278,6 @@ const AppCanvas = () => {
         const tw = thogImage.width / 1000 * tick;
         const th = thogImage.height / 1000 * tick;
 
-
-
         if (++tick > 1500)
             tick = 0;
         updatePoints();
@@ -289,7 +287,7 @@ const AppCanvas = () => {
             renderPoints();
         }
 
-        ctx.globalAlpha = tick / 1000;
+        ctx.globalAlpha = (tick < 1200) ? (tick / 1200) : (1500 - tick) / 300;
         ctx.drawImage(thogImage, canvas.width / 2 - tw / 2, canvas.height / 2 - th / 2, tw, th);
         ctx.globalAlpha = 1;
     };

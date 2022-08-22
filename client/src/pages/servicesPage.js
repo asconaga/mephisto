@@ -1,4 +1,4 @@
-import { Carousel, Col, message, Row } from 'antd';
+import { Button, Carousel, Col, message, Row } from 'antd';
 import React, { useState, useEffect } from 'react';
 import { FaCheckCircle, FaFrown } from 'react-icons/fa';
 
@@ -79,22 +79,21 @@ const getContent = (serviceArr, carouselState, setCarouselState) => {
         const sectionItems = [
             {
                 key: '1',
-                title: 'Services',
+                title: 'Services'
             },
             {
                 key: '2',
-                title: 'Posts',
-
+                title: 'Methods'
             },
             {
                 key: '3',
-                title: 'Methods',
+                title: 'Posts'
             },
         ];
 
         sectionItems[0]['arr'] = serviceArr;
-        sectionItems[2]['arr'] = serviceArr[carouselState.service]?.methods;
-        sectionItems[1]['arr'] = serviceArr[carouselState.service]?.methods[carouselState.method]?.posts;
+        sectionItems[1]['arr'] = serviceArr[carouselState.service]?.methods;
+        sectionItems[2]['arr'] = serviceArr[carouselState.service]?.methods[carouselState.method]?.posts;
 
         let tmpArr = [];
 
@@ -114,7 +113,6 @@ const getContent = (serviceArr, carouselState, setCarouselState) => {
             setCarouselState(cloneService);
         };
 
-
         const customPag = (i) => {
             return <p style={{ userSelect: 'none' }}>{i + 1}</p>;
         };
@@ -127,9 +125,14 @@ const getContent = (serviceArr, carouselState, setCarouselState) => {
             );
         };
 
+        const showPostDetails = () => {
+        };
+
         const arrChangers = [onChangeService, onChangeMethod, null];
 
-        for (let index = 0; index < sectionItems.length; index++) {
+        const order = [0, 2, 1]; // posts in the middle
+
+        order.forEach(index => {
             const elemArr = sectionItems[index];
 
             let tmpConArr = [];
@@ -152,21 +155,25 @@ const getContent = (serviceArr, carouselState, setCarouselState) => {
                             <div className="innerText">
                                 <h1>{service.name}</h1>
                                 <p>{service.description}</p>
-                            </div>
 
+                                {(() => {
+                                    if ((index === 2) && (!service?.image)) {
+                                        return <Button onClick={showPostDetails} type="primary">See Incident Detail</Button>;
+                                    }
+                                })()}
+                            </div>
                         </div>
                     </div>
                 );
             });
 
-
             tmpArr.push(<div key={elemArr.key}>
-                <div className="content">
+                <div className={(index !== 2) ? "content" : "posts"}>
                     <h2>{elemArr.title}</h2>
                     <Carousel arrows={false}
                         dots={true}
                         infinite
-                        slidesToShow={(tmpConArr.length >= 3) ? 3 : 1}
+                        slidesToShow={Math.min(tmpConArr.length, 3)}
                         slidesToScroll={1}
                         swipeToSlide
                         draggable
@@ -189,7 +196,7 @@ const getContent = (serviceArr, carouselState, setCarouselState) => {
                     </Carousel>
                 </div>
             </div >);
-        }
+        });
         retVal = <div>{tmpArr} </div>;
     }
 
