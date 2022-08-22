@@ -36,7 +36,7 @@ const AppCanvas = () => {
             thickness: 6,
             strokeColor: 'red',
             level: .35,
-            curved: true
+            curved: false
         };
 
     const rand = function (min, max) {
@@ -60,6 +60,12 @@ const AppCanvas = () => {
         ctx.fill();
 
         // ctx.fillRect(x - 1, y - 1, 3, 3);
+    };
+
+    const keyPress = (evt) => {
+        if (evt.key === 't') {
+            opt.curved = !opt.curved;
+        }
     };
 
     const moveStars = distance => {
@@ -153,14 +159,6 @@ const AppCanvas = () => {
         }
     };
 
-    Point.prototype.render = () => {
-        const ctx = ctxRef.current;
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, 3, 0, Math.PI * 2, false);
-        ctx.fillStyle = '#fff';
-        ctx.fill();
-    };
-
     const updatePoints = () => {
         let i = points.length;
         while (i--) {
@@ -169,9 +167,14 @@ const AppCanvas = () => {
     };
 
     const renderPoints = () => {
+        const ctx = ctxRef.current;
+
         let i = points.length;
         while (i--) {
-            points[i].render();
+            ctx.beginPath();
+            ctx.arc(points[i].x, points[i].y, 3, 0, Math.PI * 2, false);
+            ctx.fillStyle = '#f80';
+            ctx.fill();
         }
     };
 
@@ -293,7 +296,7 @@ const AppCanvas = () => {
     };
 
     return (
-        <canvas className="AppCanvas"
+        <canvas className="AppCanvas" onKeyDown={keyPress}
             tabIndex="0"
             id="canvas"
             ref={canvasRef}

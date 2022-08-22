@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 import { Layout, Menu } from 'antd';
 import { FaCogs, FaMagento, FaMandalorian } from 'react-icons/fa';
 import { AiFillHome, AiFillInfoCircle } from 'react-icons/ai';
@@ -8,6 +8,7 @@ import { GiHypodermicTest } from 'react-icons/gi';
 const { Sider } = Layout;
 
 const AppSidebar = () => {
+    let location = useLocation();
 
     const getItem = (label, link, icon, children, type) => {
         return {
@@ -40,7 +41,7 @@ const AppSidebar = () => {
             linkVal = <NavLink to={item.link}>{item.label}</NavLink>;
         }
 
-        return <Menu.Item key={nextKey++} icon={item.icon}>{linkVal}</Menu.Item>;
+        return <Menu.Item key={item.link} icon={item.icon}>{linkVal}</Menu.Item>;
     };
 
     // only for two level menus
@@ -70,6 +71,7 @@ const AppSidebar = () => {
         <Sider collapsed={true} collapsedWidth={48}>
             <Menu
                 mode="inline"
+                selectedKeys={[location.pathname]}
                 style={{ height: '100%' }} >
                 {getMenu()}
             </Menu>
