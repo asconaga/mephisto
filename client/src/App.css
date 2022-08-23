@@ -77,7 +77,6 @@
   border-radius: 50%;
   width: 33px;
   height: 33px;
-
 }
 
 .slick-arrow.slick-next {
@@ -124,11 +123,39 @@ body {
 
 .App {
   text-align: left;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  height: 100vh;
 }
 
 .App-logo {
   height: 40vmin;
   pointer-events: none;
+}
+
+.page-header {
+  position: fixed;
+  z-index: 1;
+  width: 100%;
+  padding: 0 20px;
+  height: 48px;
+}
+
+.page-footer {
+  text-align: center;
+  margin: 0px;
+  padding: 10px;
+  font-family: 'Oleo Script Swash Caps', cursive;
+  font-size: 18px;
+  color: var(--back-color) !important;
+}
+
+.page-main {
+  flex-grow: 1;
+  justify-content: flex-start;
+  margin-top: 64px;
+  overflow-y: auto;
 }
 
 .flexCenter {
@@ -172,27 +199,6 @@ body {
   }
 }
 
-.header {
-  position: fixed;
-  z-index: 1;
-  width: 100%;
-  padding: 0 20px;
-  height: 48px;
-}
-
-.footer {
-  text-align: center;
-  margin: 0px;
-  padding: 10px;
-  font-family: 'Oleo Script Swash Caps', cursive;
-  font-size: 18px;
-  color: var(--back-color) !important;
-}
-
-.innerLayout {
-  margin-top: 64px;
-}
-
 .headerUtil {
   float: right;
 }
@@ -212,10 +218,6 @@ body {
   flex-grow: 1;
   align-items: left;
   overflow-y: auto;
-}
-
-.titleHolder {
-  text-align: center;
 }
 
 .titleHolder h2 {
@@ -270,18 +272,28 @@ body {
 
 /* --- services --- */
 
-.servicesBlock .contentHolder {
+.ServicesPage {
+  /* height: 100%; */
+  /* width: 100%; */
+  /* display: flex; */
+  flex-direction: column;
+  /* justify-content: center;
+  align-items: center; */
+}
+
+
+.ServicesPage .contentHolder {
   text-align: justify;
   margin: 0 0 50px;
 }
 
-.servicesBlock .icon {
+.ServicesPage .icon {
   font-size: 40px;
   color: var(--primary-color);
   margin: 0 0 10px;
 }
 
-.servicesBlock .content {
+.ServicesPage .content {
   text-align: center;
   margin-bottom: 10px;
   background-color: var(--content-color);
@@ -289,17 +301,18 @@ body {
   /* border-radius: 20px; */
 }
 
-.servicesBlock .posts {
+.ServicesPage .posts {
   text-align: center;
   margin-bottom: 10px;
+  flex-grow: 1;
 }
 
-.servicesBlock h2 {
+.ServicesPage h2 {
   color: var(--back-color);
   margin: 0;
 }
 
-.servicesBlock .innerContent {
+.ServicesPage .innerContent {
   display: inline-grid;
   grid-template-columns: auto auto auto;
   text-align: center;
@@ -334,7 +347,7 @@ body {
   margin: 20px 0;
 }
 
-.servicesBlock .innerContent .innerImage {
+.ServicesPage .innerContent .innerImage {
   display: flex;
   width: 80px;
   background: var(--back-color);
@@ -342,20 +355,27 @@ body {
   justify-content: center;
 }
 
-.servicesBlock .innerContent .innerText {
+.ServicesPage .innerContent .innerText {
   text-overflow: scroll;
   overflow-y: auto;
 }
 
-.servicesBlock .innerContent h1 {
+.ServicesPage .innerContent h1 {
   color: var(--back-color);
 }
 
-.servicesBlock .innerContent svg {
+.ServicesPage .innerContent svg {
   font-size: 44px;
 }
 
 /* --- testPage --- */
+
+.TestPage {
+  display: flex;
+  flex-direction: column;
+  /* align-items: center; */
+  /* justify-content: center; */
+}
 
 .mainTest {
   /* height: 100%; */
@@ -428,12 +448,28 @@ body {
   font-style: italic;
 }
 
-/* Home Page */
+/* About Page */
+.AboutPage {
+  display: flex;
+  height: 100%;
+  /* width: 100%; */
+  justify-content: center;
+  align-items: center;
+}
 
 .AppCanvas {
   width: 100%;
   height: 700px;
   background-color: black;
+}
+
+/* Home Page */
+
+.HomePage {
+  display: flex;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
 }
 
 .innerHome {

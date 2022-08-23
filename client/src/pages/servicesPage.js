@@ -4,9 +4,7 @@ import { FaCheckCircle, FaFrown } from 'react-icons/fa';
 
 const ServicesPage = () => {
     return (
-        <div id="services">
-            <ServicesSelection />
-        </div>
+        <ServicesSelection />
     );
 };
 
@@ -61,11 +59,8 @@ const ServicesSelection = () => {
     }, [API_URL]);
 
     return (
-        <div className="block servicesBlock">
+        <div className="ServicesPage">
             <div className="container-fluid">
-                <div className="titleHolder">
-                    <h2>Services Page</h2>
-                </div>
                 {getContent(fetchItems, carouselState, setCarouselState)}
             </div>
         </div>
@@ -167,37 +162,36 @@ const getContent = (serviceArr, carouselState, setCarouselState) => {
                 );
             });
 
-            tmpArr.push(<div key={elemArr.key}>
-                <div className={(index !== 2) ? "content" : "posts"}>
-                    <h2>{elemArr.title}</h2>
-                    <Carousel arrows={false}
-                        dots={true}
-                        infinite
-                        slidesToShow={Math.min(tmpConArr.length, 3)}
-                        slidesToScroll={1}
-                        swipeToSlide
-                        draggable
-                        centerMode={true}
-                        centerPadding="0px"
-                        className="center"
-                        focusOnSelect={true}
-                        responsive={[
-                            {
-                                breakpoint: 1024,
-                                settings: {
-                                    slidesToShow: 1
-                                }
-                            }]}
-                        customPaging={customPag}
-                        appendDots={appendDots}
-                        cssEase="cubic-bezier(0.600, -0.280, 0.735, 0.045)"
-                        afterChange={arrChangers[index]}>
-                        {tmpConArr}
-                    </Carousel>
-                </div>
-            </div >);
+            tmpArr.push(<div key={elemArr.key} className={(index !== 2) ? "content" : "posts"}>
+                <h2>{elemArr.title}</h2>
+                <Carousel arrows={false}
+                    dots={true}
+                    infinite
+                    slidesToShow={Math.min(tmpConArr.length, 3)}
+                    slidesToScroll={1}
+                    swipeToSlide
+                    draggable
+                    centerMode={true}
+                    centerPadding="0px"
+                    className="center"
+                    focusOnSelect={true}
+                    responsive={[
+                        {
+                            breakpoint: 1024,
+                            settings: {
+                                slidesToShow: 1
+                            }
+                        }]}
+                    customPaging={customPag}
+                    appendDots={appendDots}
+                    cssEase="cubic-bezier(0.600, -0.280, 0.735, 0.045)"
+                    afterChange={arrChangers[index]}>
+                    {tmpConArr}
+                </Carousel>
+            </div>
+            );
         });
-        retVal = <div>{tmpArr} </div>;
+        retVal = tmpArr;
     }
 
     return retVal;

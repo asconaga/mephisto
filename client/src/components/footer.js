@@ -9,9 +9,7 @@ const AppFooter = () => {
 
     const location = useLocation();
     return (
-        <div>
-            <Footer className="footer">Mephisto MAL Client = &lsquo;Developed by lijidea&rsquo; [{location.pathname}]</Footer>
-        </div>
+        <Footer className="page-footer">Mephisto MAL Client = &lsquo;Developed by lijidea&rsquo; [{location.pathname}]</Footer>
     );
 };
 

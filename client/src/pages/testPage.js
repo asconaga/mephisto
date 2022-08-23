@@ -133,9 +133,8 @@ const TestPage = () => {
     }, []);
 
     return (
-        <div className="testblock block">
+        <div className="TestPage">
             <div className="titleHolder">
-                <h2>Test Page</h2>
                 <div>
                     <Form
                         form={form}
@@ -174,7 +173,7 @@ const TestPage = () => {
                                     }}
                                 >
                                     <Button type="primary" htmlType="submit">
-                                        Fetch
+                                        Send
                                     </Button>
                                 </Form.Item>
                             </div>

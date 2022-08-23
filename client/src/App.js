@@ -23,9 +23,9 @@ function App() {
     return (
         <div className="App" data-theme={appTheme}>
             <BrowserRouter>
-                <Layout style={{ minHeight: '100vh' }}>
+                <Layout>
                     <AppHeader appTheme={appTheme} setAppTheme={setAppTheme} />
-                    <Layout className="innerLayout">
+                    <Layout className="page-main">
                         <AppSidebar />
                         <AppContent />
                     </Layout>

@@ -2,13 +2,8 @@ import React, { useRef, useEffect } from 'react';
 
 const AboutPage = () => {
     return (
-        <main className="About">
-            <div className="block">
-                <div className="titleHolder">
-                    <h2>About Page</h2>
-                    <AppCanvas />
-                </div>
-            </div>
+        <main className="AboutPage">
+            <AppCanvas />
         </main >
     );
 };
@@ -36,7 +31,7 @@ const AppCanvas = () => {
             thickness: 6,
             strokeColor: 'red',
             level: .35,
-            curved: false
+            curved: true
         };
 
     const rand = function (min, max) {
@@ -305,7 +300,3 @@ const AppCanvas = () => {
 };
 
 export default AboutPage;
-
-
-
-

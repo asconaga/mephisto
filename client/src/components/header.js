@@ -50,20 +50,18 @@ const AppHeader = ({ appTheme, setAppTheme }) => {
     );
 
     return (
-        <div>
-            <Header className="header">
-                <div className="logo flexCenter">
-                    <Link to='/'><GiDevilMask /> - Mephisto</Link>
-                </div>
+        <Header className="page-header">
+            <div className="logo flexCenter">
+                <Link to='/'><GiDevilMask /> - Mephisto</Link>
+            </div>
 
-                <Dropdown overlay={menu}>
-                    <div className="headerUtil flexCenter"><FaChevronDown /></div>
-                </Dropdown>
-                <Popover placement="bottomRight" content={content} title="Jack's Menus">
-                    <div className="headerUtil flexCenter">{(appTheme === 'light') ? <FaSun /> : <FaMoon />}</div>
-                </Popover>
-            </Header>
-        </div>
+            <Dropdown overlay={menu}>
+                <div className="headerUtil flexCenter"><FaChevronDown /></div>
+            </Dropdown>
+            <Popover placement="bottomRight" content={content} title="Jack's Menus">
+                <div className="headerUtil flexCenter">{(appTheme === 'light') ? <FaSun /> : <FaMoon />}</div>
+            </Popover>
+        </Header>
     );
 };
 
