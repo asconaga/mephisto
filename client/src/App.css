@@ -256,14 +256,6 @@ body {
   margin: 0px 0 0px -10px;
 }
 
-/* borrowed */
-
-.container-fluid {
-  margin: 0 auto;
-  /* max-width: 1200px; */
-  padding: 0 15px;
-}
-
 /* --- block --- */
 .block {
   padding: 10px 0;
@@ -273,14 +265,14 @@ body {
 /* --- services --- */
 
 .ServicesPage {
-  /* height: 100%; */
+  height: 100%;
   /* width: 100%; */
-  /* display: flex; */
+  display: flex;
   flex-direction: column;
-  /* justify-content: center;
-  align-items: center; */
+  flex-wrap: nowrap;
+  /* justify-content: center; */
+  align-items: stretch;
 }
-
 
 .ServicesPage .contentHolder {
   text-align: justify;
@@ -302,9 +294,13 @@ body {
 }
 
 .ServicesPage .posts {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+
   text-align: center;
-  margin-bottom: 10px;
   flex-grow: 1;
+  align-items: stretch;
 }
 
 .ServicesPage h2 {
@@ -328,6 +324,7 @@ body {
 
 .posts .innerContent {
   height: 125px !important;
+  flex-grow: 1;
 }
 
 /* for the services page center carousel */
@@ -371,14 +368,13 @@ body {
 /* --- testPage --- */
 
 .TestPage {
+  height: 100%;
   display: flex;
   flex-direction: column;
-  /* align-items: center; */
-  /* justify-content: center; */
+  justify-content: center;
 }
 
 .mainTest {
-  /* height: 100%; */
   display: flex;
   align-items: stretch;
   justify-content: space-between;

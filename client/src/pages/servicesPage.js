@@ -60,9 +60,8 @@ const ServicesSelection = () => {
 
     return (
         <div className="ServicesPage">
-            <div className="container-fluid">
-                {getContent(fetchItems, carouselState, setCarouselState)}
-            </div>
+            {getContent(fetchItems, carouselState, setCarouselState)}
+
         </div>
     );
 };
@@ -142,7 +141,7 @@ const getContent = (serviceArr, carouselState, setCarouselState) => {
 
             elemArr.arr?.forEach(service => {
                 tmpConArr.push(
-                    <div className="container-fluid">
+                    <div>
                         <div className="innerContent">
                             <div className="innerImage">
                                 {service?.image ?? <FaCheckCircle />}
