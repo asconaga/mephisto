@@ -1,5 +1,5 @@
-import { Button, Carousel, Col, message, Row } from 'antd';
-import React, { useState, useEffect } from 'react';
+import { Button, Carousel, Col, message, Row, Slider } from 'antd';
+import React, { useState, useEffect, useRef } from 'react';
 import { FaCheckCircle, FaFrown } from 'react-icons/fa';
 
 const ServicesPage = () => {
@@ -13,6 +13,8 @@ const ServicesSelection = () => {
     const API_URL = API_FULL + '/api/services?complete=true';
     const [fetchItems, setFetchItems] = useState(null);
     const [carouselState, setCarouselState] = useState({ service: 0, method: 0 });
+
+    const itemsRef = useRef([]);
 
     const info = (msg, status) => {
         if (status)
@@ -60,19 +62,20 @@ const ServicesSelection = () => {
 
     return (
         <div className="ServicesPage">
-            {getContent(fetchItems, carouselState, setCarouselState)}
+            {getContent(fetchItems, carouselState, setCarouselState, itemsRef)}
 
         </div>
     );
 };
 
-const getContent = (serviceArr, carouselState, setCarouselState) => {
+const getContent = (serviceArr, carouselState, setCarouselState, itemsRef) => {
     let retVal = [];
 
     if (serviceArr) {
         const sectionItems = [
             {
                 key: '1',
+
                 title: 'Services'
             },
             {
@@ -107,19 +110,13 @@ const getContent = (serviceArr, carouselState, setCarouselState) => {
             setCarouselState(cloneService);
         };
 
-        const customPag = (i) => {
-            return <p style={{ userSelect: 'none' }}>{i + 1}</p>;
-        };
-
-        const appendDots = (dots) => {
-            return (
-                <div style={{ backgroundColor: "lightgray" }}>
-                    <ul style={{ color: "black", margin: "3px" }}> {dots} </ul>
-                </div>
-            );
-        };
-
         const showPostDetails = () => {
+        };
+
+        const onChange = (val, index) => {
+            console.log(val, index, itemsRef.current[index]);
+
+            itemsRef.current[index].goTo(val);
         };
 
         const arrChangers = [onChangeService, onChangeMethod, null];
@@ -163,8 +160,8 @@ const getContent = (serviceArr, carouselState, setCarouselState) => {
 
             tmpArr.push(<div key={elemArr.key} className={(index !== 2) ? "content" : "posts"}>
                 <h2>{elemArr.title}</h2>
-                <Carousel arrows={false}
-                    dots={true}
+                <Carousel ref={el => itemsRef.current[index] = el} arrows={false}
+                    dots={false}
                     infinite
                     slidesToShow={Math.min(tmpConArr.length, 3)}
                     slidesToScroll={1}
@@ -181,12 +178,13 @@ const getContent = (serviceArr, carouselState, setCarouselState) => {
                                 slidesToShow: 1
                             }
                         }]}
-                    customPaging={customPag}
-                    appendDots={appendDots}
                     cssEase="cubic-bezier(0.600, -0.280, 0.735, 0.045)"
                     afterChange={arrChangers[index]}>
                     {tmpConArr}
                 </Carousel>
+                <div className="servicesSlider">
+                    <Slider min={0} max={tmpConArr.length - 1} disabled={tmpConArr.length == 1} onChange={e => onChange(e, index)} />
+                </div>
             </div>
             );
         });
