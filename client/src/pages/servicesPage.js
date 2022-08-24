@@ -1,5 +1,6 @@
 import { Button, Carousel, Col, message, Row, Slider } from 'antd';
 import React, { useState, useEffect, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { FaCheckCircle, FaFrown } from 'react-icons/fa';
 
 const ServicesPage = () => {
@@ -15,6 +16,7 @@ const ServicesSelection = () => {
     const [carouselState, setCarouselState] = useState({ service: 0, method: 0 });
 
     const itemsRef = useRef([]);
+    const navigate = useNavigate();
 
     const info = (msg, status) => {
         if (status)
@@ -62,20 +64,19 @@ const ServicesSelection = () => {
 
     return (
         <div className="ServicesPage">
-            {getContent(fetchItems, carouselState, setCarouselState, itemsRef)}
+            {getContent(fetchItems, carouselState, setCarouselState, itemsRef, navigate)}
 
         </div>
     );
 };
 
-const getContent = (serviceArr, carouselState, setCarouselState, itemsRef) => {
+const getContent = (serviceArr, carouselState, setCarouselState, itemsRef, navigate) => {
     let retVal = [];
 
     if (serviceArr) {
         const sectionItems = [
             {
                 key: '1',
-
                 title: 'Services'
             },
             {
@@ -110,7 +111,14 @@ const getContent = (serviceArr, carouselState, setCarouselState, itemsRef) => {
             setCarouselState(cloneService);
         };
 
-        const showPostDetails = () => {
+        const showPostDetails = (e, key) => {
+
+            const serviceName = serviceArr[carouselState.service].name;
+            const methodName = serviceArr[carouselState.service]?.methods[carouselState.method].name;
+
+            const queryString = `/post/${key}?service=${serviceName}&method=${methodName}`;
+
+            navigate(queryString);
         };
 
         const onChange = (val, index) => {
@@ -149,7 +157,7 @@ const getContent = (serviceArr, carouselState, setCarouselState, itemsRef) => {
 
                                 {(() => {
                                     if ((index === 2) && (!service?.image)) {
-                                        return <Button onClick={showPostDetails} type="primary">See Incident Detail</Button>;
+                                        return <Button onClick={e => showPostDetails(e, service.key)} type="primary">See Incident Detail</Button>;
                                     }
                                 })()}
                             </div>

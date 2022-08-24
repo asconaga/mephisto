@@ -7,6 +7,7 @@ import MissingPage from '../pages/missingPage';
 import ServicesPage from '../pages/servicesPage';
 import TestPage from '../pages/testPage';
 import AboutPage from '../pages/aboutPage';
+import PostPage from '../pages/postPage';
 
 const { Content } = Layout;
 
@@ -19,6 +20,7 @@ const AppContent = () => {
                     <Route path="/services" element={<ServicesPage />} />
                     <Route path="/about" element={<AboutPage />} />
                     <Route path="/test" element={<TestPage />} />
+                    <Route path="/post/:id" element={<PostPage />} />
                     <Route path="*" element={<MissingPage />} />
                 </Routes>
             </div>

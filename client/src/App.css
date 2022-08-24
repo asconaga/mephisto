@@ -53,7 +53,7 @@
 
 /* @import 'antd/dist/antd.css'; */
 
-@import url('https://fonts.googleapis.com/css?family=Oleo+Script+Swash+Caps&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Teko&display=swap");
 
 .slick-arrow.slick-prev {
   font-size: 10px;
@@ -146,8 +146,8 @@ body {
   text-align: center;
   margin: 0px;
   padding: 10px;
-  font-family: 'Oleo Script Swash Caps', cursive;
-  font-size: 18px;
+  font-family: 'Teko', sans-serif;
+  font-size: 22px;
   color: var(--back-color) !important;
 }
 
@@ -167,7 +167,7 @@ body {
 .logo {
   float: left;
   font-size: 30px;
-  font-family: 'Oleo Script Swash Caps', cursive;
+  font-family: 'Teko', sans-serif;
   color: var(--theme-color);
 }
 
@@ -211,7 +211,7 @@ body {
 
 .main {
   background: var(--main-color);
-  margin: 0 16px;
+  margin: 0 0 16px 16px;
   padding: 10px;
   display: flex;
   flex-direction: column;
@@ -471,7 +471,7 @@ body {
   height: 100%;
   justify-content: center;
   align-items: center;
-  background: purple url(/scene.jpg) no-repeat center / cover;
+  background: red url(../public/scene.jpg) no-repeat center / cover;
 }
 
 .innerHome {
