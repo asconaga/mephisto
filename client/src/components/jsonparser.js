@@ -1,10 +1,18 @@
-import React, { Component, useEffect } from 'react';
+import React, { Component, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 
 const JSONParser = ({ json }) => {
 
+    const itemsRef = useRef([]);
+
     class TestReader {
         m_definitions = null;
+        m_indexRef = null;
+        m_nKey = 0;
+
+        SetRef = (ref) => {
+            this.m_indexRef = ref;
+        };
 
         navigateSchemaTree = (jsonObj, rootObj) => {
             for (let key in jsonObj) {
@@ -110,7 +118,6 @@ const JSONParser = ({ json }) => {
         };
 
         generateOut = (user) => {
-
             let ret = <div>{user.title}</div>;
 
             return ret;
@@ -134,12 +141,12 @@ const JSONParser = ({ json }) => {
                     }
 
                     let objData = { type: objType, title: key };
-                    retVal.push(this.generateLine(objData));
+                    retVal.push(this.generateLine(objData, this.m_nKey++));
 
                     if (bIsObj) {
-                        let ret = <div className='json-block'> {
+                        let ret = <div style={{ position: 'absolute', opacity: 0, height: '0' }} className='json-block' > {
                             this.navigateHTML(jsonObj[key], nDepth + 1)
-                        } </div>;
+                        } </div >;
                         retVal.push(ret);
                     }
                 }
@@ -153,37 +160,72 @@ const JSONParser = ({ json }) => {
         };
 
         generateHTML = (json) => {
-            let ret = <div> {
-                this.navigateHTML(json, 0)
-            } </div>;
+            let ret = this.navigateHTML(json, 0);
 
             return ret;
         };
 
-        generateLine = (user) => {
-            let divDrop = '';
+        dropMenu = (evt, index) => {
+            const pop = this.m_indexRef.current[index].parentElement;
+
+            let currentText = this.m_indexRef.current[index].innerText;
+
+            // YAKUBU try             transform: scaleY(0);                    transform: scaleY(1);
+
+            let height = 'auto';
+            let position = 'relative';
+            let opacity = '1';
+            if (currentText === '▼ ') {
+                currentText = '► ';
+                height = '0';
+                opacity = 0;
+                position = 'absolute';
+            }
+            else {
+                currentText = '▼ ';
+            }
+
+            this.m_indexRef.current[index].innerText = currentText;
+            pop.nextElementSibling.style.height = height;
+            pop.nextElementSibling.style.position = position;
+            pop.nextElementSibling.style.opacity = opacity;
+        };
+
+        generateLine = (user, index) => {
             let divObj = '';
 
+            // for array and object
+
+            let divAdditional = '';
+
             if (user.value === undefined) {
-                divDrop = '▼ ';
+                // YAKUBU: shite random key 
+                divAdditional = <span key={Math.random() * 1000} ref={el => this.m_indexRef.current[index] = el}
+                    className='json-drop'
+                    onClick={(e) => this.dropMenu(e, index)}>{'► '}</span>;
 
                 divObj = <span className="json-type">({user.type})</span>;
             }
+            else {
+                divAdditional = '';
+            }
 
             let divMain =
+
                 <div className="json-line">
-                    <span className='json-drop'>{divDrop}</span>
+                    {divAdditional}
                     <span className="json-title">{user.title}:</span> {this.generateValue(user)} {divObj}
                 </div>;
 
-            let divRet = <div>{divMain}</div>;
-
-            return divRet;
+            return divMain;
         };
     }
 
     const newTester = new TestReader();
-    newTester.generateTree(json);
+    newTester.SetRef(itemsRef);
+
+    useEffect(() => {
+    }, []);
 
     return (
         <div className='json-parser'>
@@ -193,7 +235,7 @@ const JSONParser = ({ json }) => {
 };
 
 JSONParser.propTypes = {
-    json: PropTypes.object.isRequired,
+    json: PropTypes.any.isRequired,
 };
 
 export default JSONParser;

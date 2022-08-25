@@ -411,6 +411,7 @@ body {
   min-height: 300px;
   max-height: 300px;
   overflow-y: scroll;
+  padding: 0 0 0 6px;
 }
 
 .json-block {
@@ -418,10 +419,14 @@ body {
   border-width: thin;
   border-right: none;
   padding-left: 20px;
+  transition: opacity 0.5s ease-in;
+
+  /* look at transition: transform 0.26s ease; */
+  overflow: hidden;
 }
 
 .json-line {
-  display: inline-block;
+  display: block;
 }
 
 .json-maintext {
