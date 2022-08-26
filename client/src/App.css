@@ -505,3 +505,35 @@ body {
 .homeAnnounce p {
   font-size: 1.4rem;
 }
+
+/* --- responsive --- */
+
+@media only screen and (max-width: 767px) {
+  .mainTest {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .contentor {
+    min-width: 300px;
+    margin-bottom: 10px;
+  }
+
+  .TestPage {
+    display: block;
+  }
+
+  .homeAnnounce {
+    margin: 10px;
+  }
+
+  .homeAnnounce h1 {
+    font-size: 1rem;
+  }
+
+  .homeAnnounce p {
+    font-size: 0.8rem;
+  }
+}
+
+/* @media only screen and (max-width: 568px) {} */
