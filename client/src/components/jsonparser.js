@@ -144,7 +144,7 @@ const JSONParser = ({ json }) => {
                     retVal.push(this.generateLine(objData, this.m_nKey++));
 
                     if (bIsObj) {
-                        let ret = <div key={this.generateKey()} style={{ position: 'absolute', opacity: 0, height: '0' }} className='json-block' > {
+                        let ret = <div key={this.generateKey()} style={{ position: 'absolute', opacity: 0, transform: 'ScaleY(0)' }} className='json-block' > {
                             this.navigateHTML(jsonObj[key], nDepth + 1)
                         } </div >;
                         retVal.push(ret);
@@ -170,14 +170,12 @@ const JSONParser = ({ json }) => {
 
             let currentText = this.m_indexRef.current[index].innerText;
 
-            // YAKUBU try             transform: scaleY(0);                    transform: scaleY(1);
-
-            let height = 'auto';
+            let height = 'scaleY(1)';
             let position = 'relative';
             let opacity = '1';
             if (currentText === '▼ ') {
                 currentText = '► ';
-                height = '0';
+                height = 'scaleY(0)';
                 opacity = 0;
                 position = 'absolute';
             }
@@ -186,7 +184,7 @@ const JSONParser = ({ json }) => {
             }
 
             this.m_indexRef.current[index].innerText = currentText;
-            pop.nextElementSibling.style.height = height;
+            pop.nextElementSibling.style.transform = height;
             pop.nextElementSibling.style.position = position;
             pop.nextElementSibling.style.opacity = opacity;
         };

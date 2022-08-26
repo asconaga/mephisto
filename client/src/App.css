@@ -419,7 +419,8 @@ body {
   border-width: thin;
   border-right: none;
   padding-left: 20px;
-  transition: opacity 0.2s ease-in;
+  transition: opacity 0.3s linear, transform 0.2s ease;
+  transform: scaleY(1);
 
   /* look at transition: transform 0.26s ease; */
   overflow: hidden;
@@ -476,7 +477,7 @@ body {
   height: 100%;
   justify-content: center;
   align-items: center;
-  background: red url(../public/scene.jpg) no-repeat center / cover;
+  background: rgba(255, 0, 0, 0.11) url(../public/scene.jpg) no-repeat center / cover;
 }
 
 .innerHome {
