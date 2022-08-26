@@ -23,6 +23,33 @@ const TestPage = () => {
 
     let todos = {};
 
+    // YAKUBU - error 1
+
+    // todos = {
+    //     "incident": {
+    //         "id": 21012,
+    //         "name": "Thailand Test 1",
+    //         "modelId": 1,
+    //         "target": [
+    //         ]
+    //     }
+    // };
+
+
+    // YAKUBU - error 2
+    // todos =
+    //     [{
+    //         "id": 45871325,
+    //         "name": "Alpha Bravo",
+    //         "type": 7
+    //     },
+    //     {
+    //         "id": 45871325,
+    //         "name": "Alpha Bravo",
+    //         "type": 7
+    //     }
+    //     ];
+
     // todos = {
     //     "incident": {
     //         "id": 21012,
@@ -73,7 +100,7 @@ const TestPage = () => {
     ];
 
     const onFinish = async (values) => {
-        console.log('Success:', values);
+        // console.log('Success:', values);
 
         let retVal = {
             result: 'pigglet',

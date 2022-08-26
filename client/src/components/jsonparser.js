@@ -144,7 +144,7 @@ const JSONParser = ({ json }) => {
                     retVal.push(this.generateLine(objData, this.m_nKey++));
 
                     if (bIsObj) {
-                        let ret = <div style={{ position: 'absolute', opacity: 0, height: '0' }} className='json-block' > {
+                        let ret = <div key={this.generateKey()} style={{ position: 'absolute', opacity: 0, height: '0' }} className='json-block' > {
                             this.navigateHTML(jsonObj[key], nDepth + 1)
                         } </div >;
                         retVal.push(ret);
@@ -191,6 +191,10 @@ const JSONParser = ({ json }) => {
             pop.nextElementSibling.style.opacity = opacity;
         };
 
+        generateKey = () => {
+            return (Math.random() + Date.now());
+        };
+
         generateLine = (user, index) => {
             let divObj = '';
 
@@ -199,8 +203,7 @@ const JSONParser = ({ json }) => {
             let divAdditional = '';
 
             if (user.value === undefined) {
-                // YAKUBU: shite random key 
-                divAdditional = <span key={Math.random() * 1000} ref={el => this.m_indexRef.current[index] = el}
+                divAdditional = <span ref={el => this.m_indexRef.current[index] = el}
                     className='json-drop'
                     onClick={(e) => this.dropMenu(e, index)}>{'► '}</span>;
 
@@ -211,8 +214,7 @@ const JSONParser = ({ json }) => {
             }
 
             let divMain =
-
-                <div className="json-line">
+                <div key={this.generateKey()} className="json-line">
                     {divAdditional}
                     <span className="json-title">{user.title}:</span> {this.generateValue(user)} {divObj}
                 </div>;

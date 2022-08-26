@@ -419,7 +419,7 @@ body {
   border-width: thin;
   border-right: none;
   padding-left: 20px;
-  transition: opacity 0.5s ease-in;
+  transition: opacity 0.2s ease-in;
 
   /* look at transition: transform 0.26s ease; */
   overflow: hidden;

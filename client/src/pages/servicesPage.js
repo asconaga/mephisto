@@ -103,6 +103,10 @@ const getContent = (serviceArr, carouselState, setCarouselState, itemsRef, navig
             setCarouselState(cloneService);
         };
 
+        const generateKey = () => {
+            return (Math.random() + Date.now());
+        };
+
         const onChangeMethod = (index) => {
             const cloneService = { ...carouselState };
 
@@ -112,7 +116,6 @@ const getContent = (serviceArr, carouselState, setCarouselState, itemsRef, navig
         };
 
         const showPostDetails = (e, key) => {
-
             const serviceName = serviceArr[carouselState.service].name;
             const methodName = serviceArr[carouselState.service]?.methods[carouselState.method].name;
 
@@ -146,7 +149,7 @@ const getContent = (serviceArr, carouselState, setCarouselState, itemsRef, navig
 
             elemArr.arr?.forEach(service => {
                 tmpConArr.push(
-                    <div>
+                    <div key={generateKey()}>
                         <div className="innerContent">
                             <div className="innerImage">
                                 {service?.image ?? <FaCheckCircle />}
@@ -166,7 +169,7 @@ const getContent = (serviceArr, carouselState, setCarouselState, itemsRef, navig
                 );
             });
 
-            tmpArr.push(<div key={elemArr.key} className={(index !== 2) ? "content" : "posts"}>
+            tmpArr.push(<div key={index} className={(index !== 2) ? "content" : "posts"}>
                 <h2>{elemArr.title}</h2>
                 <Carousel ref={el => itemsRef.current[index] = el} arrows={false}
                     dots={false}

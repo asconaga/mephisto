@@ -38,10 +38,10 @@ const AppSidebar = () => {
         let linkVal = item.label;
 
         if (item.link) {
-            linkVal = <NavLink to={item.link}>{item.label}</NavLink>;
+            linkVal = <NavLink key={nextKey++} to={item.link}>{item.label}</NavLink>;
         }
 
-        return <Menu.Item key={item.link} icon={item.icon}>{linkVal}</Menu.Item>;
+        return <Menu.Item key={nextKey++} icon={item.icon}>{linkVal}</Menu.Item>;
     };
 
     // only for two level menus
