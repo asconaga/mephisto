@@ -1,7 +1,8 @@
 import { Button, Carousel, Col, message, Row, Slider } from 'antd';
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FaCheckCircle, FaFrown } from 'react-icons/fa';
+import { PollContext, PollUpdateContext } from '../App';
 
 const ServicesPage = () => {
     return (
@@ -14,6 +15,8 @@ const ServicesSelection = () => {
     const API_URL = API_FULL + '/api/services?complete=true';
     const [fetchItems, setFetchItems] = useState(null);
     const [carouselState, setCarouselState] = useState({ service: 0, method: 0 });
+    const hasPolled = useContext(PollContext);
+    const setPolled = useContext(PollUpdateContext);
 
     const itemsRef = useRef([]);
     const navigate = useNavigate();
@@ -25,7 +28,8 @@ const ServicesSelection = () => {
             message.error(msg);
     };
 
-    useEffect(() => {
+    // YAKUBU: Can we extract some of these functions out of the effectFunction
+    const effectFunction = () => {
         async function reqCallback(response) {
             if (response.ok) {
                 const resObj = await response.json();
@@ -52,6 +56,8 @@ const ServicesSelection = () => {
         };
 
         const doFetchItems = async () => {
+            setPolled(false);
+
             await fetch(API_URL, request)
                 .then(reqCallback)
                 .catch(function (error) {
@@ -59,13 +65,31 @@ const ServicesSelection = () => {
                 });
         };
 
+        console.log(hasPolled + " services UseEffect");
+
         (async () => await doFetchItems())();
-    }, [API_URL]);
+    };
+
+    // YAKUBU: check we are not leaking memory here and if we need a return
+    useEffect(() => {
+        // if mounted and hasPolled hasn't been set 
+        if (!hasPolled) {
+            effectFunction();
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps           
+    }, []);
+
+    useEffect(() => {
+        // if hasPolled has changed and is true
+        if (hasPolled) {
+            effectFunction();
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps           
+    }, [hasPolled]);
 
     return (
         <div className="ServicesPage">
             {getContent(fetchItems, carouselState, setCarouselState, itemsRef, navigate)}
-
         </div>
     );
 };
