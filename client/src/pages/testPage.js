@@ -210,7 +210,7 @@ const TestPage = () => {
                                 <Form.Item
                                     label="Status"
                                     name="status">
-                                    <InputNumber min={200} max={299} />
+                                    <InputNumber disabled={true} controls={false} min={200} max={299} />
                                 </Form.Item>
 
                                 <Form.Item name="result" label="Result">

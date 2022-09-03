@@ -22957,9 +22957,7 @@ textarea.ant-input-number {
   border-right-width: 1px;
 }
 
-.ant-input-number-disabled .ant-input-number-input {
-  cursor: not-allowed;
-}
+.ant-input-number-disabled .ant-input-number-input {}
 
 .ant-input-number-disabled .ant-input-number-handler-wrap {
   display: none;
@@ -22974,7 +22972,8 @@ textarea.ant-input-number {
   height: 30px;
   padding: 0 11px;
   text-align: left;
-  background-color: transparent;
+  color: var(--text-color);
+  background-color: var(--input-color);
   border: 0;
   border-radius: 2px;
   outline: 0;
@@ -23128,7 +23127,7 @@ textarea.ant-input-number {
 }
 
 .ant-input-number-out-of-range input {
-  color: #a61d24;
+  color: #f00;
 }
 
 .ant-input-number-rtl {

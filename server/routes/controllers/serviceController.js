@@ -166,6 +166,43 @@ class ServicesController {
         pStatus.send(szMsg);
     };
 
+    deleteServiceOptionKey = (req, res) => {
+        const { service, option, key } = req.params;
+
+        let status = 400;
+
+        let serviceObj = {};
+        let foundService = db(this.utilObj.tabServices).find({ name: service });
+
+        serviceObj = this.utilObj.makeMessage(`No matching post for '${option}' with key='${key}'`);
+
+        if (foundService !== undefined) {
+            const foundServiceMethod = foundService.methods.find(({ name }) => name === option);
+
+            if (foundServiceMethod !== undefined) {
+                if (!((foundServiceMethod.posts === undefined) || (foundServiceMethod.posts.length === 0))) {
+
+                    let postIndex = foundServiceMethod.posts.findIndex(({ key }) => key === req.params.key);
+
+                    if (postIndex !== -1) {
+                        foundServiceMethod.posts.splice(postIndex, 1);
+                        db.write(); // update in memory to disk
+
+                        serviceObj = this.utilObj.makeMessage('post deleted');
+                        serviceObj.key = key;
+                    }
+
+                    status = (postIndex == -1) ? 404 : 200;
+                }
+            }
+        }
+        const pStatus = res.status(status);
+
+        const szMsg = this.utilObj.makePretty(serviceObj);
+
+        pStatus.send(szMsg);
+    };
+
     patchServiceOptionKey = (req, res) => {
         const { service, option, key } = req.params;
 
@@ -270,7 +307,46 @@ class ServicesController {
         pStatus.send(szMsg);
     };
 
+    deleteServiceOption = (req, res) => {
+        const { service, option } = req.params;
+
+        let status = 400;
+
+        let serviceObj = this.utilObj.makeMessage(`No matching method for '${option}' for service='${service}'`);
+
+        let foundService = db(this.utilObj.tabServices).find({ name: service });
+
+        if (foundService !== undefined) {
+            if (req.validKey) {
+                let methodIndex = foundService.methods.findIndex(({ name }) => name === option);
+
+                if (methodIndex !== -1) {
+                    status = 200;
+
+                    foundService.methods.splice(methodIndex, 1); // remove the method
+                    db.write(); // update in memory to disk                
+
+                    serviceObj = this.utilObj.makeMessage(`method deleted`);
+                    serviceObj.method = option;
+                }
+            }
+            else {
+                serviceObj = this.utilObj.makeMessage(`Valid key must be provided to register method`);
+            }
+        }
+        const pStatus = res.status(status);
+
+        const szMsg = this.utilObj.makePretty(serviceObj);
+
+        pStatus.send(szMsg);
+    };
+
     /* special case for register method of service */
+
+    // {
+    //    "description": "Fresh Water"
+    // }
+
     postServiceOptionRegister = (req, res) => {
         const { service, option } = req.params;
 
@@ -402,6 +478,39 @@ class ServicesController {
                 for (let i = 0; i < foundService.methods.length; i++) {
                     serviceObj[service].methods.push({ name: foundService.methods[i].name });
                 }
+            }
+        }
+
+        const pStatus = res.status(status);
+
+        const szMsg = this.utilObj.makePretty(serviceObj);
+
+        pStatus.send(szMsg);
+    };
+
+    deleteService = (req, res) => {
+        const { service } = req.params;
+
+        let status = 400;
+        let serviceObj = { message: `Service '${service}' not found` };
+
+        let dbServicesBase = db(this.utilObj.tabServices).value();
+
+        let serviceIndex = db(this.utilObj.tabServices).findIndex({ name: service });
+
+        if (serviceIndex !== -1) {
+            if (req.validKey) {
+
+                status = 200;
+
+                dbServicesBase.splice(serviceIndex, 1);
+                db.write(); // update in memory to disk
+
+                serviceObj = this.utilObj.makeMessage(`service deleted`);
+                serviceObj.service = service;
+            }
+            else {
+                serviceObj = this.utilObj.makeMessage(`Valid key must be provided to register method`);
             }
         }
 

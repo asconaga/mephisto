@@ -26,16 +26,19 @@ module.exports = (utilObj) => {
     router
         .route('/:service/:option')
         .get(ctrServices.getServiceOption)
+        .delete(ctrServices.deleteServiceOption)
         .post(ctrServices.postServiceOption);
 
     router
         .route('/:service/:option/:key')
         .get(ctrServices.getServiceOptionKey)
+        .delete(ctrServices.deleteServiceOptionKey)
         .patch(ctrServices.patchServiceOptionKey);
 
     router
         .route('/:service')
-        .get(ctrServices.getService);
+        .get(ctrServices.getService)
+        .delete(ctrServices.deleteService);
 
     router
         .route('/')
